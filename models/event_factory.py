@@ -1,5 +1,6 @@
 from miniamf import ASObject
-from models.BaseEvent import PingEvent, Event, EnterEvent
+from models.BaseEvent import EnterEvent, Event, PingEvent
+
 
 def event_factory(data: ASObject,):
     if (data.get('evt', None)):

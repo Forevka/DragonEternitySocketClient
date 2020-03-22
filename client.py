@@ -1,19 +1,17 @@
 import socket
-import typing
+import threading
 import time
+import typing
 
 from loguru import logger
 
 from AMFBuffer import AMFBuffer
-
 from dispatcher import Dispatcher
 from tasks.task import MyTask
-import threading
 
 
 class Client:
     onstart_handlers: typing.List[typing.Callable[['Client', Dispatcher], None]]
-    tasks: typing.Dict[int, 'MyTask']
 
     dispatcher: Dispatcher
     receiver: threading.Thread
@@ -28,33 +26,7 @@ class Client:
 
         self.receiver = None
 
-        self.tasks = {}
-
         self.onstart_handlers = []
-
-    def add_task(self, task: typing.Callable[['Client', Dispatcher], None], timeout: int):
-        task_id = len(self.tasks)
-
-        task_thread = MyTask(task, task_id, timeout, self, self.dispatcher)
-
-        self.tasks[task_id] = task_thread
-        if (self.is_connected):
-            task_thread.run()
-
-        return task_id
-
-    def _start_tasks(self,):
-        for i in self.tasks.values():
-            i.run()
-
-    def task(self, timeout: int,):
-
-        def decorator(callback: typing.Callable[['Client', Dispatcher], None]):
-            self.add_task(callback, timeout)
-
-            return callback
-
-        return decorator
 
     def onstart(self,):
         def decorator(callback: typing.Callable[['Client', Dispatcher], None]):
@@ -73,7 +45,7 @@ class Client:
 
             logger.debug('Invoking on start handlers')
             for callback in self.onstart_handlers:
-                logger.debug(f'Invoking {callback} handler')
+                logger.debug(f'Invoking {callback.__name__} handler')
                 callback(self, self.dispatcher)
             
         except socket.error as err:
@@ -83,7 +55,7 @@ class Client:
         self.receiver.start()
 
         logger.debug('Starting tasks')
-        self._start_tasks()
+        self.dispatcher._start_tasks()
         logger.debug('Tasks started!')
 
     def set_dispatcher(self, disp: Dispatcher,):
@@ -96,6 +68,12 @@ class Client:
     def receive(self,):
         while True:
             data = self.socket.recv(1024 * 256)
-            self.dispatcher.dispatch(data, self)
+            buffer = AMFBuffer()
+        
+            #length = data[:4]
+            #print(length)
+            #length = int.from_bytes(bytes=length, byteorder='big')
+            #print(length)
 
-
+            updates = buffer.decode(data[4:])
+            self.dispatcher.dispatch(updates, self)

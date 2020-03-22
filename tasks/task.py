@@ -1,4 +1,3 @@
-from dispatcher import Dispatcher
 from tasks.cancellation_token import CancellationToken
 from loguru import logger
 import typing
@@ -6,20 +5,20 @@ import threading
 import time
 
 class MyTask(threading.Thread):
-    task: typing.Callable[['Client', Dispatcher], None]
+    task: typing.Callable[['Client', 'Dispatcher'], None]
     cancelation_source: CancellationToken
     task_id: int
     timeout: int
     client: 'Client'
-    dp: Dispatcher
+    dp: 'Dispatcher'
 
     def __init__(
         self, 
-        task: typing.Callable[['Client', Dispatcher], None], 
+        task: typing.Callable[['Client', 'Dispatcher'], None], 
         task_id: int,
         timeout: int,
         client: 'Client',
-        dp: Dispatcher
+        dp: 'Dispatcher'
     ):
         threading.Thread.__init__(self)
 

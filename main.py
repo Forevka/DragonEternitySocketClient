@@ -4,6 +4,7 @@ from AMFFactory import command
 from config import HOST, PORT
 from loguru import logger
 from models.BaseEvent import Event
+from models.ChatMessage import ChatMessage
 from events import EventType
 
 client = Client(HOST, PORT)
@@ -15,7 +16,7 @@ client.set_dispatcher(dp)
 def enter(client: Client, dp: Dispatcher,):
     a = command('enter')
     a['env'] = 1
-    a['key'] = '9f719be99b37483962d736b7cf7683a3'
+    a['key'] = '79ca025553b74445b1ac6020d6f00ecc'
     a['ccid'] = '5D4BCF747B3C'
     a['lang'] = 'ru'
     a['cid'] = '21128101'
@@ -23,14 +24,17 @@ def enter(client: Client, dp: Dispatcher,):
 
     client.send(a)
 
-@client.task(5)
+@dp.task(5)
 def ping(client: Client, dp: Dispatcher,):
     a = command('ping')
     client.send(a)
 
 @dp.handler(EventType.ChatMessage)
 def chat_handler(client: Client, dp: Dispatcher, event: Event):
-    logger.debug(event)
+    print(event)
+    event = ChatMessage.from_dict(event)
+
+    logger.debug(f"{event.chat_message_from}: {event.msg}")
 
 @dp.handler(EventType.Enter)
 def enter_handler(client: Client, dp: Dispatcher, event: Event):

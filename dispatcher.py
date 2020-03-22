@@ -1,11 +1,14 @@
-from AMFBuffer import AMFBuffer
-from loguru import logger
-from events import EventType
-from models.event_factory import event_factory
-from models.BaseEvent import Event
+import json
 import typing
 
-import json 
+from loguru import logger
+
+from AMFBuffer import AMFBuffer
+from events import EventType
+from models.BaseEvent import Event, Update
+from models.event_factory import event_factory
+from tasks.task import MyTask
+
 
 def upperfirst(x):
     def sliceindex(x):
@@ -22,21 +25,39 @@ def upperfirst(x):
 class Dispatcher:
     handlers: typing.Dict[EventType, typing.List[typing.Callable[['Client', 'Dispatcher', Event], None]]]
     client: 'Client'
+    tasks: typing.Dict[int, 'MyTask']
 
     def __init__(self, client: 'Client'):
-        self.handlers = {}
         self.client = client
+        
+        self.handlers = {}
+        self.tasks = {}
     
+    def add_task(self, task: typing.Callable[['Client', 'Dispatcher'], None], timeout: int):
+        task_id = len(self.tasks)
 
-    def dispatch(self, data, client: 'Client'):
-        #length = data[:4]
-        #print(length)
-        #length = int.from_bytes(bytes=length, byteorder='big')
-        #print(length)
-        buffer = AMFBuffer()
-        updates = buffer.decode(data[4:])
-        logger.debug(f'new update {updates.time}')
+        task_thread = MyTask(task, task_id, timeout, self.client, self)
 
+        self.tasks[task_id] = task_thread
+        if (self.client.is_connected):
+            task_thread.run()
+
+        return task_id
+
+    def _start_tasks(self,):
+        for i in self.tasks.values():
+            i.run()
+
+    def task(self, timeout: int,):
+
+        def decorator(callback: typing.Callable[['Client', Dispatcher], None]):
+            self.add_task(callback, timeout)
+
+            return callback
+
+        return decorator
+
+    def dispatch(self, updates: Update, client: 'Client'):
         for update in updates.events:
             event = event_factory(update)
             logger.debug(f'Event {event.event}')

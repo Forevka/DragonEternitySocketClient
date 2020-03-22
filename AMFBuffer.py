@@ -1,6 +1,7 @@
 from DataMixin import DataMixin
-from models.BaseEvent import Update
 from miniamf import decode, encode
+from models.BaseEvent import Update
+
 
 class AMFBuffer(DataMixin):
 

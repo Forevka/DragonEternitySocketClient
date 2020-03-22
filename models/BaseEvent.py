@@ -1,8 +1,11 @@
-import typing
 import datetime
+import typing
+
+from loguru import logger
+
 from events import EventType
 from miniamf import ASObject
-from loguru import logger
+
 
 class BaseEvent:
     data: ASObject

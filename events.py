@@ -12,3 +12,4 @@ class EventType(Enum):
     EventsInfo = auto()
     ChatUsersDiff = auto()
     EventUpdated = auto()
+    NewLogin = auto()
