@@ -2,9 +2,12 @@ from dispatcher import Dispatcher
 from client import Client
 from AMFFactory import command
 from config import HOST, PORT
+from loguru import logger
+from models.BaseEvent import Event
+from events import EventType
 
 client = Client(HOST, PORT)
-dp = Dispatcher()
+dp = Dispatcher(client)
 
 client.set_dispatcher(dp)
 
@@ -24,6 +27,18 @@ def enter(client: Client, dp: Dispatcher,):
 def ping(client: Client, dp: Dispatcher,):
     a = command('ping')
     client.send(a)
+
+@dp.handler(EventType.ChatMessage)
+def chat_handler(client: Client, dp: Dispatcher, event: Event):
+    logger.debug(event)
+
+@dp.handler(EventType.Enter)
+def enter_handler(client: Client, dp: Dispatcher, event: Event):
+    logger.debug(event)
+
+@dp.handler(EventType.Ping)
+def ping_handler(client: Client, dp: Dispatcher, event: Event):
+    logger.debug(f'ping {event}')
 
 if __name__ == "__main__":
     client.start()

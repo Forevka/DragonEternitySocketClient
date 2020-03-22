@@ -1,4 +1,5 @@
 from DataMixin import DataMixin
+from models.BaseEvent import Update
 from miniamf import decode, encode
 
 class AMFBuffer(DataMixin):
@@ -10,10 +11,11 @@ class AMFBuffer(DataMixin):
         self.buffer += encode(self.data)._buf.getbuffer().tobytes()
         self._write_length()
 
-    def decode(self, data):
+    def decode(self, data) -> Update:
         decoded = decode(data)
-        d = next(decoded)
+        update = Update(next(decoded))
 
+        '''
         while(d is not None):
             print('!!!!!!!!!!!')
             print(d)
@@ -24,6 +26,8 @@ class AMFBuffer(DataMixin):
                 d = None
             #except Exception as e:
             #    print(e)
+        '''
+        return update
 
 
 

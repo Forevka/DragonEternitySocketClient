@@ -1,5 +1,4 @@
 import socket
-import threading
 import typing
 import time
 
@@ -8,14 +7,16 @@ from loguru import logger
 from AMFBuffer import AMFBuffer
 
 from dispatcher import Dispatcher
+from tasks.task import MyTask
+import threading
 
-class CancellationToken:
-    cancel_requested: bool = False
-
-    def cancel(self,):
-        self.cancel_requested = True
 
 class Client:
+    onstart_handlers: typing.List[typing.Callable[['Client', Dispatcher], None]]
+    tasks: typing.Dict[int, 'MyTask']
+
+    dispatcher: Dispatcher
+    receiver: threading.Thread
 
     def __init__(self, host: str, port: int):
         self.host = host
@@ -23,13 +24,13 @@ class Client:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.is_connected = False
         
-        self.dispatcher: Dispatcher = None
+        self.dispatcher = None
 
-        self.receiver: threading.Thread = None
+        self.receiver = None
 
-        self.tasks: typing.Dict[int, MyTask] = {}
+        self.tasks = {}
 
-        self.onstart_handlers: typing.List[typing.Callable[[Client, Dispatcher], None]] = []
+        self.onstart_handlers = []
 
     def add_task(self, task: typing.Callable[['Client', Dispatcher], None], timeout: int):
         task_id = len(self.tasks)
@@ -85,7 +86,7 @@ class Client:
         self._start_tasks()
         logger.debug('Tasks started!')
 
-    def set_dispatcher(self, disp: Dispatcher):
+    def set_dispatcher(self, disp: Dispatcher,):
         self.dispatcher = disp
 
     def send(self, buffer: AMFBuffer,):
@@ -98,41 +99,3 @@ class Client:
             self.dispatcher.dispatch(data, self)
 
 
-class MyTask(threading.Thread):
-    task: typing.Callable[[Client, Dispatcher], None]
-    cancelation_source: CancellationToken
-    task_id: int
-    timeout: int
-    client: Client
-    dp: Dispatcher
-
-    def __init__(
-        self, 
-        task: typing.Callable[[Client, Dispatcher], None], 
-        task_id: int,
-        timeout: int,
-        client: Client,
-        dp: Dispatcher
-    ):
-        threading.Thread.__init__(self)
-
-        self.timeout = timeout
-        self.task = task
-        self.task_id = task_id
-        self.client = client
-        self.dp = dp
-
-        self.cancelation_source = CancellationToken()
-    
-    def cancel(self,):
-        self.cancelation_source.cancel()
-
-    def run(self,):
-        logger.debug(f'Task {self.task_id} started')
-        while (self.cancelation_source.cancel_requested == False):
-            if (self.client.is_connected == False):
-                logger.debug('Client is not connected waiting for next tick...')
-                time.sleep(self.timeout)
-                continue
-            self.task(self.client, self.dp)
-            time.sleep(self.timeout)
