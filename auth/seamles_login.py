@@ -3,12 +3,11 @@ import sys
 
 from selenium import webdriver
 from loguru import logger
+from selenium.webdriver.remote.command import Command
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
-
-LOGIN = "zebestforevka@gmail.com"
-PASSWORD = "werdwerd"
+from config import LOGIN, PASSWORD
 
 def spinning_cursor():
     while True:
@@ -21,9 +20,9 @@ def interact():
     import code
     code.InteractiveConsole(locals=globals()).interact()
 
-def open_browser():
+def seamles_login() -> str:
     options = webdriver.ChromeOptions()
-    options.add_argument("--host-resolver-rules=MAP vk.com 127.0.0.1")
+    options.add_argument("--host-resolver-rules=MAP vk.com 8.8.8.8")
     options.add_experimental_option("detach", True)
 
     driver = webdriver.Chrome(r'D:\chromedriver.exe', options = options)
@@ -84,7 +83,3 @@ def open_browser():
     html_source = driver.page_source
     t = html_source[html_source.find(";key="):html_source.find(";key=") + html_source[html_source.find(";key="):][1:].find(";")][5:-3]
     return t
-
-
-if __name__ == "__main__":
-    open_browser()

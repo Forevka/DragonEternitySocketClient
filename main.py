@@ -1,12 +1,14 @@
 from dispatcher import Dispatcher
 from client import Client
+import random
 from AMFFactory import command
 from config import HOST, PORT
 from loguru import logger
 from models.BaseEvent import Event
 from models.ChatMessage import ChatMessage
 from events import EventType
-from login import open_browser
+from auth.seamles_login import seamles_login
+from auth.silent_login import silent_login
 
 client = Client(HOST, PORT)
 dp = Dispatcher(client)
@@ -15,12 +17,17 @@ client.set_dispatcher(dp)
 
 @client.onstart()
 def enter(client: Client, dp: Dispatcher,):
+    def randomString(stringLength = 12):
+        """Generate a random string of fixed length """
+        letters = '123456789ABCDEF'
+        return ''.join(random.choice(letters) for i in range(stringLength))
+
     logger.info(client.user_key)
 
     a = command('enter')
     a['env'] = 1
     a['key'] = client.user_key
-    a['ccid'] = '5D4BCF747B3C'
+    a['ccid'] = randomString()#'4D4BCF747B3C'
     a['lang'] = 'ru'
     a['cid'] = '21128101'
     a['seq'] = 1
@@ -47,10 +54,7 @@ def ping_handler(client: Client, dp: Dispatcher, event: Event):
     logger.debug(f'ping {event}')
 
 if __name__ == "__main__":
-    user_key = open_browser()
+    #user_key = silent_login('TEST_KILL')
+    user_key = seamles_login()
     logger.info(user_key)
     client.start(user_key)
-
-    #client.add_task(ping, 5)
-
-    #client.send(a.buffer)
