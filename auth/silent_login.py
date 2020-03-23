@@ -1,7 +1,8 @@
 import time
 import sys
 import requests
-from config import LOGIN, PASSWORD
+import typing
+from utils import parse_game_config
 
 from auth.models.login import LoginModel
 
@@ -31,14 +32,11 @@ def auth(user_id: int, cookies: dict) -> str:
     }
 
     response = requests.post('http://drako.ru/game/auth.php', headers=headers, params=params, cookies=cookies, data=data)
-    print(response.headers)
-    print(response.cookies)
+
     return response.cookies.get('user')
 
-#def enter(user_id: str) -> List[str]:
-#    ...
 
-def silent_login(user_name: str) -> str:
+def silent_login(login: str, password: str, user_name: str) -> typing.Dict[str, typing.List[str]]:
     headers = {
         'Host': 'drako.ru',
         'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -58,14 +56,12 @@ def silent_login(user_name: str) -> str:
         ('output', 'json'),
     )
 
-    data = f'email={LOGIN}&password={PASSWORD}&remember=1'
+    data = f'email={login}&password={password}&remember=1'
 
     response = requests.post('http://drako.ru/game/auth.php', headers=headers, params=params, data=data)
 
     logged = LoginModel.from_dict(response.json())
     print(logged)
-
-    user = logged.get_user_name(user_name)
 
     cookies = {
         'cid': logged.set_cookie_cid,
@@ -79,11 +75,11 @@ def silent_login(user_name: str) -> str:
     #print(cookies)
 
     response = requests.get('http://drako.ru/game/main.php', headers=headers, cookies=cookies)
-    print(response.text)
 
-    html_source = response.text
-    t = html_source[html_source.find("key="):html_source.find("key=") + html_source[html_source.find("key="):].find("&")][4:]
-    return t
+    var = parse_game_config(response.text)
+    print(var)
+    #t = html_source[html_source.find("key="):html_source.find("key=") + html_source[html_source.find("key="):].find("&")][4:]
+    return var
 
 
 

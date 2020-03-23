@@ -4,6 +4,8 @@ import time
 import typing
 
 from loguru import logger
+from auth.seamles_login import seamles_login
+from auth.silent_login import silent_login
 
 from AMFBuffer import AMFBuffer
 from dispatcher import Dispatcher
@@ -12,14 +14,25 @@ from tasks.task import MyTask
 
 class Client:
     onstart_handlers: typing.List[typing.Callable[['Client', Dispatcher], None]]
-    user_key: str
 
     dispatcher: Dispatcher
     receiver: threading.Thread
 
-    def __init__(self, host: str, port: int):
-        self.host = host
-        self.port = port
+    user_config: typing.Dict[str, typing.List[str]]
+
+    user_id: str
+    user_ccid: str
+    user_key: str
+    user_lang: str
+    env: int
+
+
+    def __init__(self, 
+        login: str, 
+        password: str, 
+        user_name: str, 
+        is_silent_login: bool = True
+    ):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.is_connected = False
         
@@ -30,6 +43,22 @@ class Client:
 
         self.onstart_handlers = []
 
+        if (is_silent_login):
+            user_config = silent_login(login, password, user_name)
+        else:
+            user_config = seamles_login(user_name)
+
+        
+        self.host = user_config.get('host')[0]
+        self.port = int(user_config.get('port')[0])
+
+        self.user_id = user_config.get('cid')[0]
+        self.user_ccid = user_config.get('ccid')[0]
+        self.user_key = user_config.get('key')[0]
+        self.user_lang = user_config.get('lang')[0]
+        self.env = int(user_config.get('env')[0])
+
+
     def onstart(self,):
         def decorator(callback: typing.Callable[['Client', Dispatcher], None]):
             self.onstart_handlers.append(callback)
@@ -38,9 +67,7 @@ class Client:
 
         return decorator
 
-    def start(self, user_key: str):
-        self.user_key = user_key
-
+    def start(self,):
         logger.debug('Client connecting...')
         try:
             self.socket.connect((self.host, self.port))

@@ -61,6 +61,7 @@ class Dispatcher:
         for update in updates.events:
             event = event_factory(update)
             logger.debug(f'Event {event.event}')
+            print(event.data)
             for handler in self.handlers.get(EventType[upperfirst(event.event)], []):
                 handler(self.client, self, update)
 

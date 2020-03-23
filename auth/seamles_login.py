@@ -9,14 +9,12 @@ from selenium.webdriver.remote.command import Command
 from selenium.webdriver.support.select import Select
 from tqdm import tqdm
 
-from config import LOGIN, PASSWORD
-
 
 def interact():
     import code
     code.InteractiveConsole(locals=globals()).interact()
 
-def seamles_login() -> str:
+def seamles_login(login: str, password: str, user_name: str) -> str:
     options = webdriver.ChromeOptions()
     options.add_argument("--host-resolver-rules=MAP vk.com 8.8.8.8")
     options.add_experimental_option("detach", True)
@@ -46,12 +44,12 @@ def seamles_login() -> str:
 
     logger.debug('Login inserting')
     inputElement = driver.find_element_by_xpath('/html/body/div[5]/div/div/div/div/div[2]/div[3]/form/div/fieldset[2]/div/input')
-    inputElement.send_keys(LOGIN)
+    inputElement.send_keys(login)
     logger.debug('Login inserted')
 
     logger.debug('Password inserting')
     inputElement = driver.find_element_by_xpath('/html/body/div[5]/div/div/div/div/div[2]/div[3]/form/div/fieldset[3]/input')
-    inputElement.send_keys(PASSWORD)
+    inputElement.send_keys(password)
     logger.debug('Password inserted')
 
     logger.debug('login button searching')

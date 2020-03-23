@@ -219,7 +219,7 @@ class LoginModel:
 
     def get_user_name(self, name: str) -> User:
         for i in self.users:
-            if (i.norm_nick == name):
+            if (i.norm_nick.lower() == name.lower()):
                 return i
 
 
