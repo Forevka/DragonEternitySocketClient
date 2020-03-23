@@ -54,7 +54,7 @@ class ChatMessage:
         msg = from_str(obj.get("msg"))
         msg_time = from_float(obj.get("msgTime"))
         system = from_str(obj.get("system", ""))
-        return ChatMessage(channel, evt, chat_message_from, key, kind, lang, langs, msg, msg_time)
+        return ChatMessage(channel, evt, chat_message_from, key, kind, lang, langs, msg, msg_time, system)
 
     def to_dict(self) -> dict:
         return self.__dict__

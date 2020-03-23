@@ -12,6 +12,7 @@ from tasks.task import MyTask
 
 class Client:
     onstart_handlers: typing.List[typing.Callable[['Client', Dispatcher], None]]
+    user_key: str
 
     dispatcher: Dispatcher
     receiver: threading.Thread
@@ -25,6 +26,7 @@ class Client:
         self.dispatcher = None
 
         self.receiver = None
+        self.user_key = ""
 
         self.onstart_handlers = []
 
@@ -36,7 +38,9 @@ class Client:
 
         return decorator
 
-    def start(self,):
+    def start(self, user_key: str):
+        self.user_key = user_key
+
         logger.debug('Client connecting...')
         try:
             self.socket.connect((self.host, self.port))
