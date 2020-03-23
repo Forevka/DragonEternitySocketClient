@@ -1,14 +1,16 @@
-from dispatcher import Dispatcher
-from client import Client
 import random
-from AMFFactory import command
-from config import HOST, PORT
+
 from loguru import logger
-from models.BaseEvent import Event
-from models.ChatMessage import ChatMessage
-from events import EventType
+
+from AMFFactory import command
 from auth.seamles_login import seamles_login
 from auth.silent_login import silent_login
+from client import Client
+from config import HOST, PORT
+from dispatcher import Dispatcher
+from events import EventType
+from models.BaseEvent import Event
+from models.ChatMessage import ChatMessage
 
 client = Client(HOST, PORT)
 dp = Dispatcher(client)

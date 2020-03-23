@@ -1,20 +1,16 @@
-import time
 import sys
+import time
 
-from selenium import webdriver
 from loguru import logger
-from selenium.webdriver.remote.command import Command
-from selenium.webdriver.common.keys import Keys
+from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.remote.command import Command
 from selenium.webdriver.support.select import Select
+from tqdm import tqdm
+
 from config import LOGIN, PASSWORD
 
-def spinning_cursor():
-    while True:
-        for cursor in '|/-\\':
-            yield  cursor
-
-spinner = spinning_cursor()
 
 def interact():
     import code
@@ -43,12 +39,10 @@ def seamles_login() -> str:
 
     logger.debug('Opening main page')
     logger.debug('Wait until loaded')
-
-    for _ in range(30 * 10):
-        sys.stdout.write(next(spinner))
-        sys.stdout.flush()
+    
+    for i in tqdm(range(10 * 10)):
         time.sleep(0.1)
-        sys.stdout.write('\b')
+
 
     logger.debug('Login inserting')
     inputElement = driver.find_element_by_xpath('/html/body/div[5]/div/div/div/div/div[2]/div[3]/form/div/fieldset[2]/div/input')
@@ -65,7 +59,7 @@ def seamles_login() -> str:
     loginButton.click()
     logger.debug('login button clicked')
 
-    time.sleep(5)
+    time.sleep(2)
 
     logger.debug('enter game button searching')
     enterGameButton = driver.find_element_by_xpath('/html/body/div[5]/div/div/div/div/div[2]/div[3]/form/div/div/div/div/fieldset[1]/div[2]/div/div[2]/div/div')
@@ -74,11 +68,8 @@ def seamles_login() -> str:
 
     logger.debug('wait until main game page loaded')
 
-    for _ in range(10 * 10):
-        sys.stdout.write(next(spinner))
-        sys.stdout.flush()
+    for i in tqdm(range(10 * 10)):
         time.sleep(0.1)
-        sys.stdout.write('\b')
 
     html_source = driver.page_source
     t = html_source[html_source.find(";key="):html_source.find(";key=") + html_source[html_source.find(";key="):][1:].find(";")][5:-3]
