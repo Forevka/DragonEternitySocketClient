@@ -9,6 +9,7 @@ from dispatcher import Dispatcher
 from events import EventType
 from models.BaseEvent import Event
 from models.ChatMessage import ChatMessage
+from fsm.finite_state_machine import UserState
 
 client = Client(LOGIN, PASSWORD, 'TEST_KILL', is_silent_login=True)
 dp = Dispatcher(client)
@@ -44,9 +45,9 @@ def attack_bot(client: Client, dp: Dispatcher, event: Event):
 
 @dp.handler(EventType.ChatMessage)
 def chat_handler(client: Client, dp: Dispatcher, event: Event):
-    event = ChatMessage.from_dict(event)
+    parsed_event = ChatMessage.from_dict(event)
 
-    logger.debug(f"{event.chat_message_from}: {event.msg}")
+    logger.debug(f"{parsed_event.chat_message_from}: {parsed_event.msg}")
 
 @dp.handler(EventType.Enter)
 def enter_handler(client: Client, dp: Dispatcher, event: Event):
@@ -54,7 +55,7 @@ def enter_handler(client: Client, dp: Dispatcher, event: Event):
 
 @dp.handler(EventType.Ping)
 def ping_handler(client: Client, dp: Dispatcher, event: Event):
-    logger.debug(f'ping {event}')
+    ...
 
 
 

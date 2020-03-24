@@ -10,7 +10,6 @@ from auth.silent_login import silent_login
 
 from AMFBuffer import AMFBuffer
 from dispatcher import Dispatcher
-from tasks.task import MyTask
 
 class Client:
     onstart_handlers: typing.List[typing.Callable[['Client', Dispatcher], None]]
@@ -28,10 +27,8 @@ class Client:
     ):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.is_connected = False
-        
-        self.dispatcher = None
 
-        self.receiver = None
+        self.receiver = threading.Thread(target=self.receive,)
         self.user_key = ""
 
         self.onstart_handlers = []
@@ -65,13 +62,13 @@ class Client:
             
         except socket.error as err:
             logger.debug('Can`t connect ', err)
-        
-        self.receiver = threading.Thread(target=self.receive,)
-        self.receiver.start()
 
         logger.debug('Starting tasks')
         self.dispatcher._start_tasks()
         logger.debug('Tasks started!')
+
+        self.receiver.start()
+        self.receiver.join()
 
     def set_dispatcher(self, disp: Dispatcher,):
         self.dispatcher = disp

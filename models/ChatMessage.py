@@ -1,32 +1,6 @@
 from dataclasses import dataclass
 from typing import Any, TypeVar, Type, cast
-
-
-T = TypeVar("T")
-
-
-def from_int(x: Any) -> int:
-    assert isinstance(x, int) and not isinstance(x, bool)
-    return x
-
-
-def from_str(x: Any) -> str:
-    assert isinstance(x, str)
-    return x
-
-
-def from_float(x: Any) -> float:
-    assert isinstance(x, (float, int)) and not isinstance(x, bool)
-    return float(x)
-
-def to_float(x: Any) -> float:
-    assert isinstance(x, float)
-    return x
-
-
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
+from utils.parse import from_int, from_str, from_float
 
 @dataclass
 class ChatMessage:
@@ -43,7 +17,6 @@ class ChatMessage:
 
     @staticmethod
     def from_dict(obj: Any) -> 'ChatMessage':
-        assert isinstance(obj, dict)
         channel = from_int(obj.get("channel"))
         evt = from_str(obj.get("evt"))
         chat_message_from = from_str(obj.get("from", ""))

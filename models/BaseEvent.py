@@ -1,3 +1,4 @@
+from DataMixin import DataMixin
 import datetime
 import typing
 
@@ -6,39 +7,40 @@ from loguru import logger
 from events import EventType
 from miniamf import ASObject
 
+def event_factory(data: dict,):
+    if (data.get('evt', None)):
+        return Event(data)
+    elif (data.get('status', None)):
+        return Event({'evt': 'Ping'})
+    else:
+        return Event({'evt': 'Enter'})
 
-class BaseEvent:
-    data: ASObject
+class BaseEvent(DataMixin):
     event: EventType
 
-    def __init__(self, data: ASObject,):
-        self.data = data
+    def __init__(self, data: dict,):
+        self.data.update(data)
 
 class Event(BaseEvent):
 
-    def __init__(self, data: ASObject,):
+    def __init__(self, data: dict,):
+        super().__init__(data)
         self.event = data['evt']
-        self.data = data
-
-class EnterEvent(BaseEvent):
-
-    def __init__(self, data: ASObject,):
-        self.event = EventType.Enter
-        self.data = data
-
-class PingEvent(BaseEvent):
-
-    def __init__(self,):
-        self.event = EventType.Ping
 
 class Update:
-    status: bool
-    events: typing.List[BaseEvent]
+    events: typing.List[Event]
+    raw_events: typing.List[ASObject]
     time: datetime.datetime
 
     def __init__(self, data: ASObject,):
-        self.events = data.get('events', [])
-        self.status = data.get('status', None)
-        if (self.status is not None):
-            self.events.append({'evt': 'ping'})
+        self.raw_events = data.get('events', [])
+        self.events = []
+        if (data.get('status', None) is not None):
+            self.events.append(Event({'evt': 'ping'}))
         self.time = datetime.datetime.utcfromtimestamp(data.get('time', datetime.datetime.now().timestamp()))
+        self._parse_events()
+
+    def _parse_events(self,):
+        for raw_event in self.raw_events:
+            self.events.append(event_factory(raw_event))
+

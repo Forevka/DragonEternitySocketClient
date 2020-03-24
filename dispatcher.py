@@ -1,14 +1,12 @@
-import json
+from __future__ import annotations
+from fsm.finite_state_machine import UserState
 import typing
 
 from loguru import logger
 
-from AMFBuffer import AMFBuffer
 from events import EventType
 from models.BaseEvent import Event, Update
-from models.event_factory import event_factory
 from tasks.task import MyTask
-
 
 def upperfirst(x):
     def sliceindex(x):
@@ -25,7 +23,9 @@ def upperfirst(x):
 class Dispatcher:
     handlers: typing.Dict[EventType, typing.List[typing.Callable[['Client', 'Dispatcher', Event], None]]]
     client: 'Client'
-    tasks: typing.Dict[int, 'MyTask']
+    tasks: typing.Dict[int, MyTask]
+
+    user_state: UserState
 
     def __init__(self, client: 'Client'):
         self.client = client
@@ -40,13 +40,13 @@ class Dispatcher:
 
         self.tasks[task_id] = task_thread
         if (self.client.is_connected):
-            task_thread.run()
+            task_thread.start()
 
         return task_id
 
     def _start_tasks(self,):
         for i in self.tasks.values():
-            i.run()
+            i.start()
 
     def task(self, timeout: int,):
 
@@ -58,12 +58,11 @@ class Dispatcher:
         return decorator
 
     def dispatch(self, updates: Update, client: 'Client'):
-        for update in updates.events:
-            event = event_factory(update)
+        for event in updates.events:
             logger.debug(f'Event {event.event}')
             print(event.data)
             for handler in self.handlers.get(EventType[upperfirst(event.event)], []):
-                handler(self.client, self, update)
+                handler(self.client, self, event)
 
     def add_handler(
         self, 

@@ -1,11 +1,4 @@
-from miniamf import ASObject
-from models.BaseEvent import EnterEvent, Event, PingEvent
+from models.BaseEvent import Event
 
 
-def event_factory(data: ASObject,):
-    if (data.get('evt', None)):
-        return Event(data)
-    elif (data.get('status', None)):
-        return PingEvent()
-    else:
-        return EnterEvent(data)
+

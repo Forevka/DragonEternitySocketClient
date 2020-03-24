@@ -1,4 +1,5 @@
-from utils.parse import *
+from typing import List
+from utils.parse import from_bool, from_dict, from_int, from_list, from_none, from_str, to_class
 
 @dataclass
 class Bot:

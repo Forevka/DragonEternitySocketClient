@@ -12,7 +12,7 @@ from tqdm import tqdm
 from models.UserConfig import UserConfig
 from utils.utils import parse_game_config
 
-def seamles_login(login: str, password: str, user_name: str) -> typing.Dict[str, typing.List[str]]:
+def seamles_login(login: str, password: str, user_name: str) -> UserConfig:
     options = webdriver.ChromeOptions()
     options.add_argument("--host-resolver-rules=MAP vk.com 8.8.8.8")
     options.add_experimental_option("detach", True)

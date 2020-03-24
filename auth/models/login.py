@@ -1,39 +1,6 @@
 from dataclasses import dataclass
-from typing import Any, List, TypeVar, Type, cast, Callable
-
-
-T = TypeVar("T")
-
-
-def from_bool(x: Any) -> bool:
-    assert isinstance(x, bool)
-    return x
-
-
-def from_int(x: Any) -> int:
-    assert isinstance(x, int) and not isinstance(x, bool)
-    return x
-
-
-def from_none(x: Any) -> Any:
-    assert x is None
-    return x
-
-
-def from_str(x: Any) -> str:
-    assert isinstance(x, str)
-    return x
-
-
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
-
-
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
-
+from typing import Any, List, TypeVar, Type, cast, Callable, Union
+from utils.parse import from_bool, from_int, from_list, from_none, from_str, to_class
 
 @dataclass
 class DataCallback:
@@ -217,15 +184,7 @@ class LoginModel:
         result["setCookie[user]"] = from_str(self.set_cookie_user)
         return result
 
-    def get_user_name(self, name: str) -> User:
+    def get_user_name(self, name: str) -> Union[User, None]:
         for i in self.users:
             if (i.norm_nick.lower() == name.lower()):
                 return i
-
-
-def login_model_from_dict(s: Any) -> LoginModel:
-    return LoginModel.from_dict(s)
-
-
-def login_model_to_dict(x: LoginModel) -> Any:
-    return to_class(LoginModel, x)

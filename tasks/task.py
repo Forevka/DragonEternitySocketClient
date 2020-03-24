@@ -20,7 +20,7 @@ class MyTask(threading.Thread):
         client: 'Client',
         dp: 'Dispatcher'
     ):
-        threading.Thread.__init__(self)
+        threading.Thread.__init__(self, daemon=True)
 
         self.timeout = timeout
         self.task = task
@@ -42,3 +42,4 @@ class MyTask(threading.Thread):
                 continue
             self.task(self.client, self.dp)
             time.sleep(self.timeout)
+        
