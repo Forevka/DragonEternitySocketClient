@@ -46,7 +46,7 @@ class Client:
         if (is_silent_login):
             user_config = silent_login(login, password, user_name)
         else:
-            user_config = seamles_login(user_name)
+            user_config = seamles_login(login, password, user_name)
 
         
         self.host = user_config.get('host')[0]

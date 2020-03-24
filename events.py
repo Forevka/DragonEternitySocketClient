@@ -14,3 +14,5 @@ class EventType(Enum):
     EventUpdated = auto()
     NewLogin = auto()
     AreaBots = auto()
+    AttackBot = auto()
+    FightState = auto()

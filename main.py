@@ -10,7 +10,7 @@ from events import EventType
 from models.BaseEvent import Event
 from models.ChatMessage import ChatMessage
 
-client = Client(LOGIN, PASSWORD, 'TEST_KILL', is_silent_login=True)
+client = Client(LOGIN, PASSWORD, 'TEST_KILL', is_silent_login=False)
 dp = Dispatcher(client)
 
 client.set_dispatcher(dp)
@@ -33,6 +33,14 @@ def enter(client: Client, dp: Dispatcher,):
 def ping(client: Client, dp: Dispatcher,):
     a = command('ping')
     client.send(a)
+
+@dp.handler(EventType.AreaBots)
+def attack_bot(client: Client, dp: Dispatcher, event: Event):
+    a = command('attackBot')
+    a['id'] = 6
+
+    client.send(a)
+
 
 @dp.handler(EventType.ChatMessage)
 def chat_handler(client: Client, dp: Dispatcher, event: Event):

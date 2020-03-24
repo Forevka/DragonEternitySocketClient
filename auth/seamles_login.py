@@ -1,5 +1,6 @@
 import sys
 import time
+import typing
 
 from loguru import logger
 from selenium import webdriver
@@ -8,13 +9,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.command import Command
 from selenium.webdriver.support.select import Select
 from tqdm import tqdm
+from utils import parse_game_config
 
 
 def interact():
     import code
     code.InteractiveConsole(locals=globals()).interact()
 
-def seamles_login(login: str, password: str, user_name: str) -> str:
+def seamles_login(login: str, password: str, user_name: str) -> typing.Dict[str, typing.List[str]]:
     options = webdriver.ChromeOptions()
     options.add_argument("--host-resolver-rules=MAP vk.com 8.8.8.8")
     options.add_experimental_option("detach", True)
@@ -69,6 +71,6 @@ def seamles_login(login: str, password: str, user_name: str) -> str:
     for i in tqdm(range(10 * 10)):
         time.sleep(0.1)
 
-    html_source = driver.page_source
-    t = html_source[html_source.find(";key="):html_source.find(";key=") + html_source[html_source.find(";key="):][1:].find(";")][5:-3]
-    return t
+    #html_source = driver.page_source
+    #t = html_source[html_source.find(";key="):html_source.find(";key=") + html_source[html_source.find(";key="):][1:].find(";")][5:-3]
+    return parse_game_config(driver.page_source)
