@@ -48,6 +48,10 @@ class Dispatcher:
         for i in self.tasks.values():
             i.start()
 
+    def _stop_tasks(self,):
+        for i in self.tasks.values():
+            i.cancel()
+
     def task(self, timeout: int,):
 
         def decorator(callback: typing.Callable[['Client', Dispatcher], None]):

@@ -21,3 +21,8 @@ class EventType(Enum):
     Mana = auto()
     NewRound = auto()
     OppNew = auto()
+    Cast = auto()
+    ObsNew = auto()
+    PairChange = auto()
+    AttackNow = auto()
+    AttackWait = auto()

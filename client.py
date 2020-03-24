@@ -15,7 +15,6 @@ class Client:
     onstart_handlers: typing.List[typing.Callable[['Client', Dispatcher], None]]
 
     dispatcher: Dispatcher
-    receiver: threading.Thread
 
     user_config: UserConfig
 
@@ -28,7 +27,6 @@ class Client:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.is_connected = False
 
-        self.receiver = threading.Thread(target=self.receive,)
         self.user_key = ""
 
         self.onstart_handlers = []
@@ -67,8 +65,7 @@ class Client:
         self.dispatcher._start_tasks()
         logger.debug('Tasks started!')
 
-        self.receiver.start()
-        self.receiver.join()
+        self.receive()
 
     def set_dispatcher(self, disp: Dispatcher,):
         self.dispatcher = disp
@@ -79,13 +76,24 @@ class Client:
 
     def receive(self,):
         while True:
-            data = self.socket.recv(1024 * 256)
-            buffer = AMFBuffer()
-        
-            #length = data[:4]
-            #print(length)
-            #length = int.from_bytes(bytes=length, byteorder='big')
-            #print(length)
+            try:
+                data = self.socket.recv(1024 * 256)
+                buffer = AMFBuffer()
+            
+                #length = data[:4]
+                #print(length)
+                #length = int.from_bytes(bytes=length, byteorder='big')
+                #print(length)
 
-            updates = buffer.decode(data[4:])
-            self.dispatcher.dispatch(updates, self)
+                updates = buffer.decode(data[4:])
+                self.dispatcher.dispatch(updates, self)
+            except KeyboardInterrupt as kb_interrupt:
+                logger.info('Stopping client...')
+                self.socket.close()
+                self.is_connected = False
+                logger.info('Stopping tasks...')
+                self.dispatcher._stop_tasks()
+                logger.info('Stopped')
+                break
+
+
