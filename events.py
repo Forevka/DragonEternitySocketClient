@@ -16,3 +16,8 @@ class EventType(Enum):
     AreaBots = auto()
     AttackBot = auto()
     FightState = auto()
+    PersListChange = auto()
+    PersListState = auto()
+    Mana = auto()
+    NewRound = auto()
+    OppNew = auto()

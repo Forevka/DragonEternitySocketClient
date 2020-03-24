@@ -10,7 +10,7 @@ from events import EventType
 from models.BaseEvent import Event
 from models.ChatMessage import ChatMessage
 
-client = Client(LOGIN, PASSWORD, 'TEST_KILL', is_silent_login=False)
+client = Client(LOGIN, PASSWORD, 'TEST_KILL', is_silent_login=True)
 dp = Dispatcher(client)
 
 client.set_dispatcher(dp)
@@ -20,11 +20,11 @@ def enter(client: Client, dp: Dispatcher,):
     logger.info(client.user_key)
 
     a = command('enter')
-    a['env'] = client.env
-    a['key'] = client.user_key
-    a['ccid'] = client.user_ccid
-    a['lang'] = client.user_lang
-    a['cid'] = client.user_id
+    a['env'] = client.user_config.env
+    a['key'] = client.user_config.user_key
+    a['ccid'] = client.user_config.user_ccid
+    a['lang'] = client.user_config.user_lang
+    a['cid'] = client.user_config.user_id
     a['seq'] = 1
 
     client.send(a)
@@ -55,6 +55,8 @@ def enter_handler(client: Client, dp: Dispatcher, event: Event):
 @dp.handler(EventType.Ping)
 def ping_handler(client: Client, dp: Dispatcher, event: Event):
     logger.debug(f'ping {event}')
+
+
 
 if __name__ == "__main__":
     client.start()

@@ -2,25 +2,13 @@ import time
 import sys
 import requests
 import typing
-from utils import parse_game_config
+from config import http_headers as headers
+from utils.utils import parse_game_config
+from models.UserConfig import UserConfig
 
 from auth.models.login import LoginModel
 
 def auth(user_id: int, cookies: dict) -> str:
-    headers = {
-        'Connection': 'keep-alive',
-        'Accept': 'application/json, text/javascript, */*; q=0.01',
-        'Sec-Fetch-Dest': 'empty',
-        'X-Requested-With': 'XMLHttpRequest',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'Origin': 'https://drako.ru',
-        'Sec-Fetch-Site': 'same-origin',
-        'Sec-Fetch-Mode': 'cors',
-        'Referer': 'https://drako.ru/',
-        'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6,pl;q=0.5,fr;q=0.4,es;q=0.3',
-    }
-
     params = (
         ('action', 'enter'),
         ('output', 'json'),
@@ -36,21 +24,7 @@ def auth(user_id: int, cookies: dict) -> str:
     return response.cookies.get('user')
 
 
-def silent_login(login: str, password: str, user_name: str) -> typing.Dict[str, typing.List[str]]:
-    headers = {
-        'Host': 'drako.ru',
-        'Accept': 'application/json, text/javascript, */*; q=0.01',
-        'Sec-Fetch-Dest': 'empty',
-        'X-Requested-With': 'XMLHttpRequest',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'Origin': 'https://drako.ru',
-        'Sec-Fetch-Site': 'same-origin',
-        'Sec-Fetch-Mode': 'cors',
-        'Referer': 'https://drako.ru/',
-        'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6,pl;q=0.5,fr;q=0.4,es;q=0.3',
-    }
-
+def silent_login(login: str, password: str, user_name: str) -> UserConfig:
     params = (
         ('action', 'login'),
         ('output', 'json'),
@@ -61,7 +35,6 @@ def silent_login(login: str, password: str, user_name: str) -> typing.Dict[str, 
     response = requests.post('http://drako.ru/game/auth.php', headers=headers, params=params, data=data)
 
     logged = LoginModel.from_dict(response.json())
-    print(logged)
 
     cookies = {
         'cid': logged.set_cookie_cid,
@@ -70,19 +43,6 @@ def silent_login(login: str, password: str, user_name: str) -> typing.Dict[str, 
         'sess': logged.set_cookie_sess,#'ltaq19vhmmkktf6pa4en150s93',
     }
 
-    # user_session = auth(user.uid, cookies)
-    #cookies['user'] = user_session
-    #print(cookies)
-
     response = requests.get('http://drako.ru/game/main.php', headers=headers, cookies=cookies)
 
-    var = parse_game_config(response.text)
-    print(var)
-    #t = html_source[html_source.find("key="):html_source.find("key=") + html_source[html_source.find("key="):].find("&")][4:]
-    return var
-
-
-
-if __name__ == "__main__":
-    silent_login()
-    #open_browser()
+    return parse_game_config(response.text)

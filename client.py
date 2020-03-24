@@ -4,6 +4,7 @@ import time
 import typing
 
 from loguru import logger
+from models.UserConfig import UserConfig
 from auth.seamles_login import seamles_login
 from auth.silent_login import silent_login
 
@@ -11,21 +12,13 @@ from AMFBuffer import AMFBuffer
 from dispatcher import Dispatcher
 from tasks.task import MyTask
 
-
 class Client:
     onstart_handlers: typing.List[typing.Callable[['Client', Dispatcher], None]]
 
     dispatcher: Dispatcher
     receiver: threading.Thread
 
-    user_config: typing.Dict[str, typing.List[str]]
-
-    user_id: str
-    user_ccid: str
-    user_key: str
-    user_lang: str
-    env: int
-
+    user_config: UserConfig
 
     def __init__(self, 
         login: str, 
@@ -44,19 +37,10 @@ class Client:
         self.onstart_handlers = []
 
         if (is_silent_login):
-            user_config = silent_login(login, password, user_name)
+            self.user_config = silent_login(login, password, user_name)
         else:
-            user_config = seamles_login(login, password, user_name)
+            self.user_config = seamles_login(login, password, user_name)
 
-        
-        self.host = user_config.get('host')[0]
-        self.port = int(user_config.get('port')[0])
-
-        self.user_id = user_config.get('cid')[0]
-        self.user_ccid = user_config.get('ccid')[0]
-        self.user_key = user_config.get('key')[0]
-        self.user_lang = user_config.get('lang')[0]
-        self.env = int(user_config.get('env')[0])
 
 
     def onstart(self,):
@@ -70,7 +54,7 @@ class Client:
     def start(self,):
         logger.debug('Client connecting...')
         try:
-            self.socket.connect((self.host, self.port))
+            self.socket.connect((self.user_config.host, self.user_config.port))
             self.is_connected = True
             logger.debug('Client connected!')
 

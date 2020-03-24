@@ -9,12 +9,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.command import Command
 from selenium.webdriver.support.select import Select
 from tqdm import tqdm
-from utils import parse_game_config
-
-
-def interact():
-    import code
-    code.InteractiveConsole(locals=globals()).interact()
+from models.UserConfig import UserConfig
+from utils.utils import parse_game_config
 
 def seamles_login(login: str, password: str, user_name: str) -> typing.Dict[str, typing.List[str]]:
     options = webdriver.ChromeOptions()
@@ -71,6 +67,4 @@ def seamles_login(login: str, password: str, user_name: str) -> typing.Dict[str,
     for i in tqdm(range(10 * 10)):
         time.sleep(0.1)
 
-    #html_source = driver.page_source
-    #t = html_source[html_source.find(";key="):html_source.find(";key=") + html_source[html_source.find(";key="):][1:].find(";")][5:-3]
     return parse_game_config(driver.page_source)
