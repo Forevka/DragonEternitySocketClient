@@ -36,7 +36,7 @@ def seamles_login(login: str, password: str, user_name: str) -> UserConfig:
     logger.debug('Opening main page')
     logger.debug('Wait until loaded')
     
-    for i in tqdm(range(10 * 10)):
+    for i in tqdm(range(15 * 10)):
         time.sleep(0.1)
 
 

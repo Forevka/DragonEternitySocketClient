@@ -1,10 +1,9 @@
+from enums.events.events import EventType
 from DataMixin import DataMixin
 import datetime
 import typing
 
 from loguru import logger
-
-from events import EventType
 from miniamf import ASObject
 
 def event_factory(data: dict,):
@@ -17,8 +16,10 @@ def event_factory(data: dict,):
 
 class BaseEvent(DataMixin):
     event: EventType
+    seq: int
 
     def __init__(self, data: dict,):
+        self.seq = data.get('seq', -1)
         self.data.update(data)
 
 class Event(BaseEvent):
@@ -35,12 +36,10 @@ class Update:
     def __init__(self, data: ASObject,):
         self.raw_events = data.get('events', [])
         self.events = []
-        if (data.get('status', None) is not None):
-            self.events.append(Event({'evt': 'ping'}))
         self.time = datetime.datetime.utcfromtimestamp(data.get('time', datetime.datetime.now().timestamp()))
         self._parse_events()
 
     def _parse_events(self,):
         for raw_event in self.raw_events:
-            self.events.append(event_factory(raw_event))
+            self.events.append(Event(raw_event))
 

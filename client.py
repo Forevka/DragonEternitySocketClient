@@ -1,3 +1,6 @@
+from models.UserGlobal import UserGlobal
+from auth.models.login import User
+from models.game_state.Fight import Fight
 import socket
 import threading
 import time
@@ -11,6 +14,7 @@ from auth.silent_login import silent_login
 from AMFBuffer import AMFBuffer
 from dispatcher import Dispatcher
 
+
 class Client:
     onstart_handlers: typing.List[typing.Callable[['Client', Dispatcher], None]]
 
@@ -18,24 +22,32 @@ class Client:
 
     user_config: UserConfig
 
+    sequence_list: typing.Any
+    sequence_counter: int
+
+    global_fight_state: Fight
+    global_user_state: UserGlobal
+
     def __init__(self, 
         login: str, 
         password: str, 
         user_name: str, 
         is_silent_login: bool = True
     ):
+        self.sequence_counter = 0
+        self.sequence_list = []
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.is_connected = False
 
         self.user_key = ""
 
         self.onstart_handlers = []
-
+        '''
         if (is_silent_login):
             self.user_config = silent_login(login, password, user_name)
         else:
             self.user_config = seamles_login(login, password, user_name)
-
+        '''
 
 
     def onstart(self,):
@@ -73,6 +85,13 @@ class Client:
     def send(self, buffer: AMFBuffer,):
         buffer.encode()
         self.socket.sendall(buffer.buffer)
+    
+    def send_rpc(self, buffer: AMFBuffer,):
+        self.sequence_counter += 1
+        buffer['seq'] = self.sequence_counter
+
+        self.send(buffer)
+
 
     def receive(self,):
         while True:
@@ -86,7 +105,7 @@ class Client:
                 #print(length)
 
                 updates = buffer.decode(data[4:])
-                self.dispatcher.dispatch(updates, self)
+                self.dispatcher.dispatch(updates)
             except KeyboardInterrupt as kb_interrupt:
                 logger.info('Stopping client...')
                 self.socket.close()

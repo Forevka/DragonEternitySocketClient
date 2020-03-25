@@ -152,7 +152,6 @@ class LoginModel:
 
     @staticmethod
     def from_dict(obj: Any) -> 'LoginModel':
-        print(obj)
         assert isinstance(obj, dict)
         email = from_str(obj.get("email"))
         users = from_list(User.from_dict, obj.get("users"))

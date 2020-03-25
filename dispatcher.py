@@ -1,10 +1,10 @@
 from __future__ import annotations
+from enums.events.events import EventType
 from fsm.finite_state_machine import UserState
 import typing
 
 from loguru import logger
 
-from events import EventType
 from models.BaseEvent import Event, Update
 from tasks.task import MyTask
 
@@ -61,9 +61,9 @@ class Dispatcher:
 
         return decorator
 
-    def dispatch(self, updates: Update, client: 'Client'):
+    def dispatch(self, updates: Update):
         for event in updates.events:
-            logger.debug(f'Event {event.event}')
+            logger.debug(f'Event {event.event} seq {event.seq}')
             print(event.data)
             for handler in self.handlers.get(EventType[upperfirst(event.event)], []):
                 handler(self.client, self, event)

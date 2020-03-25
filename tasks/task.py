@@ -1,8 +1,11 @@
-from tasks.cancellation_token import CancellationToken
-from loguru import logger
-import typing
 import threading
 import time
+import typing
+
+from loguru import logger
+
+from tasks.cancellation_token import CancellationToken
+
 
 class MyTask(threading.Thread):
     task: typing.Callable[['Client', 'Dispatcher'], None]
@@ -42,4 +45,3 @@ class MyTask(threading.Thread):
                 continue
             self.task(self.client, self.dp)
             time.sleep(self.timeout)
-        
