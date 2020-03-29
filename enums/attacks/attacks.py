@@ -6,6 +6,10 @@ class Attack(Enum):
         которыми может ударить герой при физ
         атаке
     """
+    Defence = 1
+    Simple = 2
+    Mana = 3
+
     Hit_Top = 111
     Hit_Front = 72
     Hit_Bottom = 112

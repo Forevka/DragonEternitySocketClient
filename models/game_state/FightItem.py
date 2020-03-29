@@ -7,5 +7,9 @@ class FightItem:
     cnt: int
     src_type: int
     src_id: str
+    data: dict
 
     item_type: typing.Any
+
+    def get_type_str(self,):
+        return str(self.item_type)

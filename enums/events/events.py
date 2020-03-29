@@ -20,12 +20,12 @@ class EventType(Enum):
     PersListState = auto()  
     Mana = auto()           #когда изменяется мана
     NewRound = auto()       #
-    OppNew = auto()         #
+    OppNew = auto()         #когда напротив тебя становится новый оппонент
     Cast = auto()
     ObsNew = auto()         #
     PairChange = auto()
-    AttackNow = auto()
-    AttackWait = auto()     #
+    AttackNow = auto()      #атакуем
+    AttackWait = auto()     #ждём чтоб наш оппонент сделал ход
     EffDrop = auto()
     FightFinish = auto()
     ItemInfo = auto()
@@ -33,3 +33,9 @@ class EventType(Enum):
     FightResults = auto()
     Damage = auto()
     ItemDrop = auto()
+    FriendList = auto()
+    FriendInfo = auto()
+    AddAttr = auto()
+
+
+    Lots = auto() ##my custom event

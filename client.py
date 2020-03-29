@@ -1,3 +1,5 @@
+from telegram_bot_logger import TelegramBotLogger
+from db.item_info import ItemInfoDB
 from models.UserGlobal import UserGlobal
 from auth.models.login import User
 from models.game_state.Fight import Fight
@@ -28,6 +30,10 @@ class Client:
     global_fight_state: Fight
     global_user_state: UserGlobal
 
+    global_item_info: ItemInfoDB
+
+    tg_logger: TelegramBotLogger
+
     def __init__(self, 
         login: str, 
         password: str, 
@@ -42,6 +48,8 @@ class Client:
         self.user_key = ""
 
         self.onstart_handlers = []
+
+        self.tg_logger = TelegramBotLogger()
         '''
         if (is_silent_login):
             self.user_config = silent_login(login, password, user_name)
@@ -49,6 +57,8 @@ class Client:
             self.user_config = seamles_login(login, password, user_name)
         '''
 
+    def log_telegram(self, msg: str):
+        self.tg_logger.send_message(msg)
 
     def onstart(self,):
         def decorator(callback: typing.Callable[['Client', Dispatcher], None]):

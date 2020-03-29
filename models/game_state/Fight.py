@@ -1,3 +1,7 @@
+import random
+from enums.target_type import TargetType
+from db.items import ItemDB
+from AMFFactory import command
 from utils.parse import load_item_type
 from models.game_state.FightItem import FightItem
 from enums.items.consumable import Elixir, Orb
@@ -33,16 +37,48 @@ class UserInFight:
     belt1: typing.List[FightItem]
     belt2: typing.List[FightItem]
 
+    def get_spell(self, mp: int, can_be_auxilary: bool = False):
+        db = ItemDB.get_instance()
+        possible_magic = db.get_possible_magic([i.data.get('id', 0) for i in self.fight_spells])
+
+        possible_by_mana = []
+
+        for i in possible_magic:
+            if i.get('spellManaCost', 9999) < mp:
+                target_type = i.get('spellTargetType', 0)
+                if (can_be_auxilary):
+                    if (target_type in [TargetType.Auxilary, TargetType.Opponent]):
+                        possible_by_mana.append(i)
+                else:
+                    if (target_type in [TargetType.Opponent]):
+                        possible_by_mana.append(i)
+        
+        if possible_by_mana:
+            return random.choice(possible_by_mana)
+        
+        return None
+
+
+    def get_elixir_for_heal(self,) -> typing.Union[FightItem, None]:
+        health_elixirs = [i for i in self.belt1 if 'эликсир жизни' in i.data.get('title', '').lower()]
+
+        if (health_elixirs):
+            return health_elixirs[0]
+
+
+
     @staticmethod
     def load_spells(data: dict) -> typing.List:
         spells = []
 
         for m in data.values():
             item = FightItem()
-            item.item_type = load_item_type(m.get("itemTplId", 0))
+            #item.item_type = load_item_type(m.get("itemTplId", 0))
             item.src_id = m.get("srcId", 0)
             item.src_type = m.get("srcType", 0)
             item.cnt = m.get("cnt", 0)
+            item.data = ItemDB.get_instance().get_item(m.get("itemTplId", 0))
+
             spells.append(item)
 
 
@@ -81,7 +117,10 @@ class Fight:
     is_pvp: bool
     fight_id: str
 
+    opp_id: int    
+
     me: UserInFight
+    opp: UserInFight
 
     users: typing.List[UserInFight] = []
 
@@ -89,23 +128,23 @@ class Fight:
         description = f"\n-- Fight {self.title} pvp {self.is_pvp} --"
         description += f"\nPossible attacks:\n\t"
         for i in self.me.physic_attacks:
-            description += f"{i.item_type}; "
+            description += f"{i.data.get('title')}; "
 
         description += f"\nPossible magic:\n\t"
         for i in self.me.fight_spells:
-            description += f"{i.item_type}; "
+            description += f"{i.data.get('title')}; "
 
         description += f"\nPossible orbs:\n\t"
         for i in self.me.orbs:
-            description += f"{i.item_type} {i.cnt}; "
+            description += f"{i.data.get('title')} {i.cnt}; "
 
         description += f"\nPossible belt1 item:\n\t"
         for i in self.me.belt1:
-            description += f"{i.item_type} {i.cnt}; "
+            description += f"{i.data.get('title')} {i.cnt}; "
             
         description += f"\nPossible belt2 item:\n\t"
         for i in self.me.belt2:
-            description += f"{i.item_type} {i.cnt}; "
+            description += f"{i.data.get('title')} {i.cnt}; "
 
         description += f"\nUsers in fight:"
         for i in self.users:

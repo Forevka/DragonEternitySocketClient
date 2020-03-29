@@ -1,3 +1,4 @@
+from db.items import ItemDB
 from enums.attacks.other import Nephelim
 from enums.attacks.attacks import Attack
 from enums.items.consumable import Elixir, Orb
@@ -5,6 +6,7 @@ from enums.attacks.magic import Magic
 from typing import Any, List, TypeVar, Callable, Type, cast
 
 def load_item_type(item_id: int):
+    '''
     try:
         return Magic(item_id)
     except:
@@ -29,6 +31,9 @@ def load_item_type(item_id: int):
         return Nephelim(item_id)
     except:
         pass
+    '''
+    #db = ItemDB.get_instance()
+    #db.
 
     raise ValueError(f"Unknow Item {item_id}")
 

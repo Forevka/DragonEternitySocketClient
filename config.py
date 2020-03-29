@@ -1,6 +1,8 @@
 LOGIN = "forevka69@gmail.com"
 PASSWORD = "werdwerd"
 
+BOT_TOKEN = '631844699:AAENUxQKbXeXMq1IVPKGuqL9JSPdWvRiJ90'
+CHAT_ID = '383492784'
 
 http_headers = {
     'Connection': 'keep-alive',
