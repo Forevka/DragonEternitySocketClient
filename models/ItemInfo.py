@@ -45,7 +45,10 @@ class Place:
 
     @staticmethod
     def from_dict(obj: Any) -> 'Place':
-        bag = from_int(obj.get("bag"))
+        if (isinstance(obj, str)):
+            return Place(0)
+
+        bag = from_int(obj.get("bag", 0))
         return Place(bag)
 
     def to_dict(self) -> dict:
