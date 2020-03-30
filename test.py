@@ -1,4 +1,5 @@
 from db.global_map import MapDB
+from db.bot_info_db import BotInfoDB
 from db.items import ItemDB
 from pprint import pprint, PrettyPrinter
 from miniamf import decode
@@ -16,13 +17,16 @@ import math
 
 
 if __name__ == "__main__":
-    db = ItemDB.get_instance()
+    db = BotInfoDB.get_instance()
 
+    pprint(db.get_by_id(4264))
+
+    '''
     i = db.get_item(8067)
     pprint(i)
     if ('эликсир жизни' in i.get('title', '').lower()):
         print(True)
-
+    '''
 
     '''pprint(db.db.get('17541'))
     

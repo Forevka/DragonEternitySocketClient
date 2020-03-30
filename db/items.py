@@ -14,7 +14,7 @@ class ItemDB:
     instance: 'ItemDB'
 
     def __init__(self):
-        self.db = json.loads(open('itemTpls.json', 'r', encoding='utf-8').read())
+        self.db = json.loads(open('db\\itemTpls.json', 'r', encoding='utf-8').read())
 
         self.magic = {}
         self.elixir = {}

@@ -17,6 +17,13 @@
             "request": "launch",
             "program": "${workspaceRoot}/main.py",
             "console": "externalTerminal"
+        },
+        {
+            "name": "Python: Auction",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceRoot}/auction_dumper.py",
+            "console": "externalTerminal"
         }
     ]
 }

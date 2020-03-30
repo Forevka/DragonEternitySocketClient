@@ -1,0 +1,1042 @@
+{
+    "62": {
+        "id": 62,
+        "title": "Левая рука",
+        "subtypeId": 60,
+        "groupId": 48116,
+        "categoryId": 8399
+    },
+    "63": {
+        "id": 63,
+        "title": "Правая рука",
+        "subtypeId": 60,
+        "groupId": 48116,
+        "categoryId": 8399
+    },
+    "64": {
+        "id": 64,
+        "title": "Щит",
+        "subtypeId": 60,
+        "groupId": 48116,
+        "categoryId": 8399
+    },
+    "65": {
+        "id": 65,
+        "title": "Двуручное",
+        "subtypeId": 60,
+        "groupId": 48116,
+        "categoryId": 8399
+    },
+    "66": {
+        "id": 66,
+        "title": "Поножи",
+        "subtypeId": 61,
+        "groupId": 48116,
+        "categoryId": 8398
+    },
+    "67": {
+        "id": 67,
+        "title": "Сапоги",
+        "subtypeId": 61,
+        "groupId": 48116,
+        "categoryId": 8398
+    },
+    "69": {
+        "id": 69,
+        "title": "Кираса",
+        "subtypeId": 61,
+        "groupId": 48116,
+        "categoryId": 8398
+    },
+    "96": {
+        "id": 96,
+        "title": "Шлем",
+        "subtypeId": 61,
+        "groupId": 48116,
+        "categoryId": 8398
+    },
+    "164": {
+        "id": 164,
+        "title": "Наплечники",
+        "subtypeId": 61,
+        "groupId": 48116,
+        "categoryId": 8398
+    },
+    "167": {
+        "id": 167,
+        "title": "Перчатки",
+        "subtypeId": 61,
+        "groupId": 48116,
+        "categoryId": 8398
+    },
+    "197": {
+        "id": 197,
+        "title": "Браслет",
+        "subtypeId": 22272,
+        "groupId": 48234,
+        "categoryId": 8400
+    },
+    "198": {
+        "id": 198,
+        "title": "Кольцо",
+        "subtypeId": 22272,
+        "groupId": 48234,
+        "categoryId": 8400
+    },
+    "200": {
+        "id": 200,
+        "title": "Талисман",
+        "subtypeId": 22272,
+        "groupId": 48234,
+        "categoryId": 8400
+    },
+    "201": {
+        "id": 201,
+        "title": "Серьга",
+        "subtypeId": 22272,
+        "groupId": 48234,
+        "categoryId": 8400
+    },
+    "609": {
+        "id": 609,
+        "title": "Врожденные",
+        "subtypeId": 608
+    },
+    "611": {
+        "id": 611,
+        "title": "Стойки",
+        "subtypeId": 608
+    },
+    "882": {
+        "id": 882,
+        "title": "Заклинание огня",
+        "subtypeId": 881
+    },
+    "883": {
+        "id": 883,
+        "title": "Заклинание воды",
+        "subtypeId": 881
+    },
+    "888": {
+        "id": 888,
+        "title": "Эликсир",
+        "subtypeId": 886,
+        "groupId": 48119,
+        "categoryId": 8401
+    },
+    "896": {
+        "id": 896,
+        "title": "Орб",
+        "subtypeId": 895,
+        "groupId": 48119,
+        "categoryId": 8401
+    },
+    "1000": {
+        "id": 1000,
+        "title": "Эффект",
+        "subtypeId": 1001,
+        "categoryId": 8401
+    },
+    "1145": {
+        "id": 1145,
+        "title": "Еда",
+        "subtypeId": 1144,
+        "groupId": 48237,
+        "categoryId": 8402
+    },
+    "1328": {
+        "id": 1328,
+        "title": "Заклинание воздуха",
+        "subtypeId": 881
+    },
+    "1329": {
+        "id": 1329,
+        "title": "Заклинание земли",
+        "subtypeId": 881
+    },
+    "1330": {
+        "id": 1330,
+        "title": "Заклинание порядка",
+        "subtypeId": 881
+    },
+    "1331": {
+        "id": 1331,
+        "title": "Заклинание хаоса",
+        "subtypeId": 881
+    },
+    "1332": {
+        "id": 1332,
+        "title": "Заклинание жизни",
+        "subtypeId": 881
+    },
+    "1333": {
+        "id": 1333,
+        "title": "Заклинание времени",
+        "subtypeId": 881
+    },
+    "59607": {
+        "id": 59607,
+        "title": "Амулет призыва",
+        "subtypeId": 46205
+    },
+    "1521": {
+        "id": 1521,
+        "title": "Амулет",
+        "subtypeId": 1519,
+        "groupId": 48234,
+        "categoryId": 8400
+    },
+    "1522": {
+        "id": 1522,
+        "title": "Ожерелье",
+        "subtypeId": 1519,
+        "groupId": 48234,
+        "categoryId": 8400
+    },
+    "1861": {
+        "id": 1861,
+        "title": "Символ",
+        "subtypeId": 1860,
+        "groupId": 48119,
+        "categoryId": 8401
+    },
+    "1925": {
+        "id": 1925,
+        "title": "Заклинание разрушения",
+        "subtypeId": 881
+    },
+    "2786": {
+        "id": 2786,
+        "title": "Квестовые предметы"
+    },
+    "2969": {
+        "id": 2969,
+        "title": "Пояс",
+        "subtypeId": 2970,
+        "groupId": 48235,
+        "categoryId": 8403
+    },
+    "3243": {
+        "id": 3243,
+        "title": "Кристалл",
+        "subtypeId": 3242,
+        "groupId": 48236,
+        "categoryId": 8405
+    },
+    "3472": {
+        "id": 3472,
+        "title": "Сумка",
+        "subtypeId": 3469,
+        "groupId": 48235,
+        "categoryId": 8403
+    },
+    "3623": {
+        "id": 3623,
+        "title": "Задания",
+        "subtypeId": 3615,
+        "groupId": 48123,
+        "categoryId": 8404
+    },
+    "48316": {
+        "id": 48316,
+        "title": "Кристальер",
+        "subtypeId": 28862
+    },
+    "3992": {
+        "id": 3992,
+        "title": "Магический орб",
+        "subtypeId": 3991,
+        "groupId": 48119,
+        "categoryId": 8401
+    },
+    "4170": {
+        "id": 4170,
+        "title": "Перевязь",
+        "subtypeId": 2970,
+        "groupId": 48235,
+        "categoryId": 8403
+    },
+    "45855": {
+        "id": 45855,
+        "title": "Набор ловчего",
+        "subtypeId": 28862,
+        "groupId": 48120
+    },
+    "5909": {
+        "id": 5909,
+        "title": "Эссенция",
+        "subtypeId": 3242,
+        "groupId": 48236,
+        "categoryId": 8405
+    },
+    "6965": {
+        "id": 6965,
+        "title": "Искра",
+        "subtypeId": 3242,
+        "groupId": 48236,
+        "categoryId": 8405
+    },
+    "6967": {
+        "id": 6967,
+        "title": "Призма",
+        "subtypeId": 7748,
+        "groupId": 48236,
+        "categoryId": 8405
+    },
+    "7374": {
+        "id": 7374,
+        "title": "Награда",
+        "subtypeId": 7372
+    },
+    "7673": {
+        "id": 7673,
+        "title": "Шар Костолома",
+        "subtypeId": 7672,
+        "groupId": 48122,
+        "categoryId": 8404
+    },
+    "46204": {
+        "id": 46204,
+        "title": "Идол призыва",
+        "categoryId": 8401,
+        "subtypeId": 46205,
+        "groupId": 48119
+    },
+    "9390": {
+        "id": 9390,
+        "title": "Подарок"
+    },
+    "47189": {
+        "id": 47189,
+        "title": "Проклятие",
+        "groupId": 48119,
+        "subtypeId": 47187
+    },
+    "47188": {
+        "id": 47188,
+        "title": "Порча",
+        "groupId": 48119,
+        "subtypeId": 49136
+    },
+    "15616": {
+        "id": 15616,
+        "title": "Бальзам",
+        "groupId": 48119,
+        "subtypeId": 15615,
+        "categoryId": 8401
+    },
+    "16699": {
+        "id": 16699,
+        "title": "Реликт",
+        "groupId": 48236,
+        "categoryId": 8405,
+        "subtypeId": 3242
+    },
+    "21134": {
+        "id": 21134,
+        "title": "Тестовый",
+        "subtypeId": 21133
+    },
+    "46664": {
+        "id": 46664,
+        "title": "Рукопись",
+        "groupId": 48120,
+        "subtypeId": 30527,
+        "categoryId": 8404
+    },
+    "17282": {
+        "id": 17282,
+        "title": "Элемент коллекции",
+        "groupId": 48121,
+        "subtypeId": 17281,
+        "categoryId": 8404
+    },
+    "17284": {
+        "id": 17284,
+        "title": "Активаторы",
+        "groupId": 48121,
+        "subtypeId": 17281,
+        "categoryId": 8404
+    },
+    "17571": {
+        "id": 17571,
+        "title": "Коллекция",
+        "groupId": 48121,
+        "subtypeId": 17281
+    },
+    "24525": {
+        "id": 24525,
+        "title": "Кулон дракона",
+        "groupId": 48118,
+        "subtypeId": 24524,
+        "categoryId": 24523
+    },
+    "24526": {
+        "id": 24526,
+        "title": "Маска дракона",
+        "groupId": 48118,
+        "subtypeId": 24524,
+        "categoryId": 24523
+    },
+    "24527": {
+        "id": 24527,
+        "title": "Наручи дракона",
+        "groupId": 48118,
+        "subtypeId": 24524,
+        "categoryId": 24523
+    },
+    "24528": {
+        "id": 24528,
+        "title": "Талисман дракона",
+        "groupId": 48118,
+        "subtypeId": 24524,
+        "categoryId": 24523
+    },
+    "24529": {
+        "id": 24529,
+        "title": "Оружие дракона",
+        "groupId": 48118,
+        "subtypeId": 24524,
+        "categoryId": 24523
+    },
+    "24530": {
+        "id": 24530,
+        "title": "Ожерелье дракона",
+        "groupId": 48118,
+        "subtypeId": 24524,
+        "categoryId": 24523
+    },
+    "25261": {
+        "id": 25261,
+        "title": "Фиолар",
+        "groupId": 48116,
+        "subtypeId": 2970
+    },
+    "25770": {
+        "id": 25770,
+        "title": "Фионит скелетара",
+        "groupId": 48119,
+        "subtypeId": 25763,
+        "categoryId": 8401
+    },
+    "26713": {
+        "id": 26713,
+        "title": "Компонент",
+        "groupId": 48236,
+        "subtypeId": 7748
+    },
+    "27314": {
+        "id": 27314,
+        "title": "Миолар",
+        "groupId": 48116,
+        "subtypeId": 2970
+    },
+    "28648": {
+        "id": 28648,
+        "title": "Семена",
+        "groupId": 48120,
+        "subtypeId": 28649
+    },
+    "28790": {
+        "id": 28790,
+        "title": "Снасть",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "28703": {
+        "id": 28703,
+        "title": "Удобрение",
+        "groupId": 48120,
+        "subtypeId": 28702
+    },
+    "28805": {
+        "id": 28805,
+        "title": "Приманка",
+        "groupId": 48120,
+        "subtypeId": 29869
+    },
+    "28863": {
+        "id": 28863,
+        "title": "Удочка",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "28881": {
+        "id": 28881,
+        "title": "Наживка",
+        "groupId": 48120,
+        "subtypeId": 28804
+    },
+    "30532": {
+        "id": 30532,
+        "title": "Схема ювелира",
+        "groupId": 48120,
+        "subtypeId": 30527,
+        "categoryId": 8404
+    },
+    "30531": {
+        "id": 30531,
+        "title": "Схема начертателя",
+        "groupId": 48120,
+        "subtypeId": 30527,
+        "categoryId": 8404
+    },
+    "30530": {
+        "id": 30530,
+        "title": "Формула алхимика",
+        "groupId": 48120,
+        "subtypeId": 30527,
+        "categoryId": 8404
+    },
+    "30529": {
+        "id": 30529,
+        "title": "Рецепт повара",
+        "groupId": 48120,
+        "subtypeId": 30527,
+        "categoryId": 8404
+    },
+    "29815": {
+        "id": 29815,
+        "title": "Разделочный нож",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "29816": {
+        "id": 29816,
+        "title": "Капкан",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "29817": {
+        "id": 29817,
+        "title": "Горняк",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "29818": {
+        "id": 29818,
+        "title": "Рудокоп",
+        "groupId": 48120,
+        "subtypeId": 28862,
+        "categoryId": 8404
+    },
+    "29819": {
+        "id": 29819,
+        "title": "Лесоруб",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "29871": {
+        "id": 29871,
+        "title": "Наживка на зверя",
+        "groupId": 48120,
+        "subtypeId": 29870
+    },
+    "29872": {
+        "id": 29872,
+        "title": "Наживка на насекомое",
+        "groupId": 48120,
+        "subtypeId": 29870
+    },
+    "29873": {
+        "id": 29873,
+        "title": "Наживка на птицу",
+        "groupId": 48120,
+        "subtypeId": 29870
+    },
+    "29875": {
+        "id": 29875,
+        "title": "Трофей",
+        "groupId": 48123,
+        "subtypeId": 3615
+    },
+    "29889": {
+        "id": 29889,
+        "title": "Туша зверя",
+        "groupId": 48236,
+        "subtypeId": 3242
+    },
+    "29890": {
+        "id": 29890,
+        "title": "Туша насекомого",
+        "groupId": 48236,
+        "subtypeId": 3242
+    },
+    "29891": {
+        "id": 29891,
+        "title": "Туша птицы",
+        "groupId": 48236,
+        "subtypeId": 3242
+    },
+    "29945": {
+        "id": 29945,
+        "title": "Прикорм",
+        "groupId": 48120,
+        "subtypeId": 29869
+    },
+    "30360": {
+        "id": 30360,
+        "title": "Подарок",
+        "subtypeId": 30359,
+        "categoryId": 8404
+    },
+    "30850": {
+        "id": 30850,
+        "title": "Продукция фермера",
+        "groupId": 48120,
+        "categoryId": 8405,
+        "subtypeId": 3242
+    },
+    "30851": {
+        "id": 30851,
+        "title": "Продукция рыболова",
+        "groupId": 48120,
+        "subtypeId": 3242,
+        "categoryId": 8405
+    },
+    "30852": {
+        "id": 30852,
+        "title": "Продукция охотника",
+        "groupId": 48120,
+        "subtypeId": 3242,
+        "categoryId": 8405
+    },
+    "30853": {
+        "id": 30853,
+        "title": "Продукция старателя",
+        "groupId": 48120,
+        "subtypeId": 3242,
+        "categoryId": 8405
+    },
+    "30854": {
+        "id": 30854,
+        "title": "Продукция алхимика",
+        "groupId": 48120,
+        "subtypeId": 3242,
+        "categoryId": 8405
+    },
+    "30855": {
+        "id": 30855,
+        "title": "Продукция начертателя",
+        "groupId": 48120,
+        "subtypeId": 3242,
+        "categoryId": 8405
+    },
+    "30856": {
+        "id": 30856,
+        "title": "Продукция повара",
+        "groupId": 48120,
+        "subtypeId": 3242,
+        "categoryId": 8405
+    },
+    "30857": {
+        "id": 30857,
+        "title": "Продукция ювелира",
+        "groupId": 48120,
+        "subtypeId": 3242,
+        "categoryId": 8405
+    },
+    "30875": {
+        "id": 30875,
+        "title": "Схема кузнеца",
+        "groupId": 48120,
+        "subtypeId": 30527
+    },
+    "31963": {
+        "id": 31963,
+        "title": "Набор орбов",
+        "groupId": 48119,
+        "subtypeId": 895
+    },
+    "31964": {
+        "id": 31964,
+        "title": "Набор магических орбов",
+        "groupId": 48119,
+        "subtypeId": 3991
+    },
+    "31965": {
+        "id": 31965,
+        "title": "Набор эликсиров",
+        "groupId": 48119,
+        "subtypeId": 886
+    },
+    "31966": {
+        "id": 31966,
+        "title": "Набор  символов",
+        "groupId": 48119,
+        "subtypeId": 1860
+    },
+    "31967": {
+        "id": 31967,
+        "title": "Набор знаков",
+        "groupId": 48119,
+        "subtypeId": 59598
+    },
+    "32494": {
+        "id": 32494,
+        "title": "Еда для дракона",
+        "groupId": 48237,
+        "subtypeId": 1144,
+        "categoryId": 8402
+    },
+    "33001": {
+        "id": 33001,
+        "title": "Футляр для колец",
+        "subtypeId": 1515
+    },
+    "33021": {
+        "id": 33021,
+        "title": "Документ",
+        "subtypeId": 1515
+    },
+    "34036": {
+        "id": 34036,
+        "title": "Набор бижутерии",
+        "groupId": 48234,
+        "subtypeId": 22272,
+        "categoryId": 8400
+    },
+    "35063": {
+        "id": 35063,
+        "title": "Набор лекаря",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "35771": {
+        "id": 35771,
+        "title": "Эффекты (ai)",
+        "subtypeId": 1001
+    },
+    "37088": {
+        "id": 37088,
+        "title": "Палар",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "36353": {
+        "id": 36353,
+        "title": "Улучшение",
+        "groupId": 48123,
+        "subtypeId": 36352,
+        "categoryId": 8404
+    },
+    "38301": {
+        "id": 38301,
+        "title": "Мотыга",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "38302": {
+        "id": 38302,
+        "title": "Топор-кирка",
+        "groupId": 48120,
+        "subtypeId": 28862
+    },
+    "38466": {
+        "id": 38466,
+        "title": "Оружие ездового животного",
+        "groupId": 48117,
+        "subtypeId": 38464
+    },
+    "38467": {
+        "id": 38467,
+        "title": "Сума ездового животного",
+        "groupId": 48117,
+        "subtypeId": 38464
+    },
+    "38468": {
+        "id": 38468,
+        "title": "Седло ездового животного",
+        "groupId": 48117,
+        "subtypeId": 38464
+    },
+    "38469": {
+        "id": 38469,
+        "title": "Магический бросок",
+        "groupId": 48119,
+        "categoryId": 8404,
+        "subtypeId": 38464
+    },
+    "38478": {
+        "id": 38478,
+        "title": "Поводья",
+        "groupId": 48117,
+        "subtypeId": 38464
+    },
+    "38479": {
+        "id": 38479,
+        "title": "Свиток призыва",
+        "groupId": 48117,
+        "categoryId": 8401,
+        "subtypeId": 38464
+    },
+    "38671": {
+        "id": 38671,
+        "title": "Тавро ездового животного",
+        "groupId": 48117,
+        "subtypeId": 38464
+    },
+    "38681": {
+        "id": 38681,
+        "title": "Узда ездового животного",
+        "groupId": 48117,
+        "subtypeId": 38464,
+        "categoryId": 8404
+    },
+    "38682": {
+        "id": 38682,
+        "title": "Ошейник ездового животного",
+        "groupId": 48117,
+        "subtypeId": 38464
+    },
+    "38779": {
+        "id": 38779,
+        "title": "Облачение",
+        "subtypeId": 38775
+    },
+    "38799": {
+        "id": 38799,
+        "title": "Набор магических бросков",
+        "groupId": 48117,
+        "subtypeId": 38464,
+        "categoryId": 8401
+    },
+    "38873": {
+        "id": 38873,
+        "title": "Метка смерти",
+        "groupId": 48122,
+        "categoryId": 8404,
+        "subtypeId": 7672
+    },
+    "38874": {
+        "id": 38874,
+        "title": "Активированная метка",
+        "groupId": 48122,
+        "categoryId": 8404,
+        "subtypeId": 59592
+    },
+    "39769": {
+        "id": 39769,
+        "title": "Свиток",
+        "groupId": 48119,
+        "subtypeId": 39768,
+        "categoryId": 8401
+    },
+    "40927": {
+        "id": 40927,
+        "title": "Осколок",
+        "groupId": 48236,
+        "subtypeId": 3242,
+        "categoryId": 8405
+    },
+    "42785": {
+        "id": 42785,
+        "title": "Регалия славы",
+        "groupId": 48116,
+        "subtypeId": 42784
+    },
+    "42786": {
+        "id": 42786,
+        "title": "Регалия чести",
+        "groupId": 48116,
+        "subtypeId": 42784
+    },
+    "43962": {
+        "id": 43962,
+        "title": "Уникальный компонент",
+        "groupId": 48236,
+        "subtypeId": 3242,
+        "categoryId": 8405
+    },
+    "44239": {
+        "id": 44239,
+        "title": "Сфера",
+        "groupId": 48119,
+        "subtypeId": 886,
+        "categoryId": 8404
+    },
+    "86743": {
+        "id": 86743,
+        "title": "Машиноид",
+        "subtypeId": 46205,
+        "categoryId": 8404,
+        "groupId": 48122
+    },
+    "59618": {
+        "id": 59618,
+        "title": "Стеллар",
+        "subtypeId": 24524,
+        "categoryId": 24523
+    },
+    "59584": {
+        "id": 59584,
+        "title": "Прочее",
+        "subtypeId": 59583,
+        "categoryId": 8404,
+        "groupId": 48123
+    },
+    "59586": {
+        "id": 59586,
+        "title": "Сундук",
+        "subtypeId": 59585,
+        "categoryId": 8404,
+        "groupId": 48123
+    },
+    "59608": {
+        "id": 59608,
+        "title": "Книга призыва",
+        "subtypeId": 46205,
+        "categoryId": 8404,
+        "groupId": 48123
+    },
+    "59593": {
+        "id": 59593,
+        "title": "Артефакт",
+        "groupId": 48123,
+        "categoryId": 8404,
+        "subtypeId": 59592
+    },
+    "59599": {
+        "id": 59599,
+        "title": "Знак",
+        "subtypeId": 59598,
+        "groupId": 48123,
+        "categoryId": 8401
+    },
+    "59984": {
+        "id": 59984,
+        "title": "Метка корсара",
+        "subtypeId": 7672,
+        "categoryId": 8404,
+        "groupId": 48122
+    },
+    "59983": {
+        "id": 59983,
+        "title": "Фиал",
+        "subtypeId": 59982,
+        "categoryId": 8401,
+        "groupId": 48119
+    },
+    "66084": {
+        "id": 66084,
+        "title": "Сидиан",
+        "subtypeId": 3242,
+        "categoryId": 8405,
+        "groupId": 48236
+    },
+    "68053": {
+        "id": 68053,
+        "title": "Боеприпасы",
+        "subtypeId": 881,
+        "categoryId": 8401
+    },
+    "68347": {
+        "id": 68347,
+        "title": "Корабельная снасть",
+        "subtypeId": 36352,
+        "categoryId": 8404,
+        "groupId": 48123
+    },
+    "69320": {
+        "id": 69320,
+        "title": "Заклятие попутного ветра",
+        "subtypeId": 59592,
+        "groupId": 48123
+    },
+    "69379": {
+        "id": 69379,
+        "title": "Заклятие сферы Тумана",
+        "groupId": 48123,
+        "subtypeId": 59592
+    },
+    "69465": {
+        "id": 69465,
+        "title": "Заклятие опытного морехода",
+        "subtypeId": 59592,
+        "groupId": 48123
+    },
+    "72741": {
+        "id": 72741,
+        "title": "Стрелковое",
+        "subtypeId": 895,
+        "categoryId": 8399,
+        "groupId": 48116
+    },
+    "72757": {
+        "id": 72757,
+        "title": "Стрелковое оружие",
+        "subtypeId": 60,
+        "categoryId": 8399,
+        "groupId": 48116
+    },
+    "72758": {
+        "id": 72758,
+        "title": "Стрелы",
+        "subtypeId": 895,
+        "categoryId": 8401,
+        "groupId": 48119
+    },
+    "73294": {
+        "id": 73294,
+        "title": "Шлем нефилима",
+        "subtypeId": 73291,
+        "categoryId": 73292,
+        "groupId": 73293
+    },
+    "73295": {
+        "id": 73295,
+        "title": "Нагрудник нефилима",
+        "subtypeId": 73291,
+        "categoryId": 73292,
+        "groupId": 73293
+    },
+    "73296": {
+        "id": 73296,
+        "title": "Оружие нефилима",
+        "subtypeId": 73291,
+        "categoryId": 73292,
+        "groupId": 73293
+    },
+    "73650": {
+        "id": 73650,
+        "title": "Набор стрел",
+        "subtypeId": 895,
+        "groupId": 48119,
+        "categoryId": 8401
+    },
+    "73721": {
+        "id": 73721,
+        "title": "Глаз нефилима",
+        "subtypeId": 73291,
+        "categoryId": 73292,
+        "groupId": 73293
+    },
+    "73722": {
+        "id": 73722,
+        "title": "Слияние нефилима",
+        "subtypeId": 73291,
+        "categoryId": 73292,
+        "groupId": 73293
+    },
+    "73723": {
+        "id": 73723,
+        "title": "Руна нефилима",
+        "subtypeId": 73291,
+        "categoryId": 73292,
+        "groupId": 73293
+    },
+    "75952": {
+        "id": 75952,
+        "title": "Звезда",
+        "subtypeId": 59592,
+        "categoryId": 8401,
+        "groupId": 48119
+    },
+    "86716": {
+        "id": 86716,
+        "title": "Чертежи",
+        "subtypeId": 30527,
+        "categoryId": 8404,
+        "groupId": 48120
+    }
+}

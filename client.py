@@ -15,6 +15,7 @@ from auth.silent_login import silent_login
 
 from AMFBuffer import AMFBuffer
 from dispatcher import Dispatcher
+from threading import Thread
 
 
 class Client:
@@ -34,6 +35,8 @@ class Client:
 
     tg_logger: TelegramBotLogger
 
+    receiver: Thread
+
     def __init__(self, 
         login: str, 
         password: str, 
@@ -50,6 +53,8 @@ class Client:
         self.onstart_handlers = []
 
         self.tg_logger = TelegramBotLogger()
+
+        self.receiver = Thread(target=self.receive)
         '''
         if (is_silent_login):
             self.user_config = silent_login(login, password, user_name)
@@ -87,7 +92,9 @@ class Client:
         self.dispatcher._start_tasks()
         logger.debug('Tasks started!')
 
-        self.receive()
+
+        #self.receive()
+        self.receiver.start()
 
     def set_dispatcher(self, disp: Dispatcher,):
         self.dispatcher = disp
@@ -115,7 +122,10 @@ class Client:
                 #print(length)
 
                 updates = buffer.decode(data[4:])
-                self.dispatcher.dispatch(updates)
+                
+                thread = Thread(target=self.dispatcher.dispatch, args=(updates,))
+                thread.start()
+                #self.dispatcher.dispatch(updates)
             except KeyboardInterrupt as kb_interrupt:
                 logger.info('Stopping client...')
                 self.socket.close()

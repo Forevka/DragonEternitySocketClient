@@ -1,4 +1,5 @@
 from datetime import datetime
+from utils.item_info_dump import LotItemDB
 from enums.damage_type import DamageType
 from db.item_info import ItemInfoDB
 from models.ItemInfo import ItemInfo
@@ -26,6 +27,8 @@ from models.OpponentNew import OpponentNew
 from models.AttackWait import AttackWait
 from models.NewAlly import NewAlly
 from models.Cast import Cast
+from db.item_kinds_db import ItemKindDB
+from time import sleep
 
 client = Client(LOGIN, PASSWORD, 'TEST_KILL', is_silent_login=True)
 
@@ -34,10 +37,11 @@ client.user_config = UserConfig()
 client.user_config.host = "game2.drako.ru"
 client.user_config.port = 7701
 client.user_config.env = 1
-client.user_config.user_key = "cd497537693f58643b4c6636ff3839ed"
+client.user_config.user_key = "a451089c4a917b9c23c26f6afb3fea34"
 client.user_config.user_ccid = "5D4BCF747B3C"
 client.user_config.user_lang = "ru"
 client.user_config.user_id = "21262955"
+
 client.global_fight_state = Fight()
 client.global_user_state = UserGlobal()
 
@@ -73,6 +77,10 @@ def ping(client: Client, dp: Dispatcher,):
 #    a['id'] = 6
 
 #    client.send(a)
+
+@dp.handler(EventType.PersListChange)
+def pers_list_change(client: Client, dp: Dispatcher, event: Event):
+    client.global_fight_state.update_pers(event.data)
 
 @dp.handler(EventType.AttackWait)
 def attack_wait(client: Client, dp: Dispatcher, event: Event):
@@ -162,28 +170,19 @@ def new_obs(client: Client, dp: Dispatcher, event: Event):
 
 @dp.handler(EventType.UserInfo)
 def user_info(client: Client, dp: Dispatcher, event: Event):
+
     #a = command('attackBot')
     #a['id'] = 6
 
     #client.send(a)
+    #sleep(2)
+    ...
 
-    a = command('auctionQuery')
-    a['order'] = 'buyout'
-    #a['kindId'] = 896
-    a['categoryId'] = 8398
-
-    client.send(a)
-
-@dp.handler(EventType.Lots)
-def handle_lots(client: Client, dp: Dispatcher, event: Event):
-    for i in event.data.get('lots'):
-        logger.warning(i)
-        logger.warning(i.item.item_info())
 
 @dp.handler(EventType.ItemInfo)
 def item_info(client: Client, dp: Dispatcher, event: Event):
     res = ItemInfo.from_dict(event.data)
-    item_info_db = ItemInfoDB.get_instance().add_item(res)
+    ItemInfoDB.get_instance().add_item(res)
 
 
 @dp.handler(EventType.FightResults)
@@ -198,7 +197,7 @@ def fight_results(client: Client, dp: Dispatcher, event: Event):
         report += f'\t\n {item_info_db.get_item_description(i.item_id).get("title", "")} - {i.count}'
 
     client.log_telegram(report)
-    a = 1
+    
 
 
 @dp.handler(EventType.Cast)
@@ -214,17 +213,21 @@ def damage(client: Client, dp: Dispatcher, event: Event):
     report = ''
 
     for dmg in cast.events:
+        from_user = client.global_fight_state.get_by_id(dmg.pers_id)
+        to_user = client.global_fight_state.get_by_id(dmg.target_id)
+
         if dmg.evt == 'damage':
-            report += f'\nUser {dmg.pers_id} damaged {dmg.target_id} for {dmg.hp} with {DamageType(dmg.dmg_type)}' + str(resist[dmg.armor]) + ('(blocked)' if dmg.block else '') + ('(critical)' if dmg.crit else '')
+            report += f'\nUser {from_user.get_name()} damaged {to_user.get_name()} for {dmg.hp} with {DamageType(dmg.dmg_type)}' + str(resist[dmg.armor]) + ('(blocked)' if dmg.block else '') + ('(critical)' if dmg.crit else '')
         elif dmg.evt == 'heal':
-            report += f'\nUser {dmg.pers_id} healed {dmg.target_id} for {dmg.hp} with {DamageType(dmg.dmg_type)}' + str(resist[dmg.armor]) + ('(blocked)' if dmg.block else '') + ('(critical)' if dmg.crit else '')
+            report += f'\nUser {from_user.get_name()} healed {to_user.get_name()} for {dmg.hp} with {DamageType(dmg.dmg_type)}' + str(resist[dmg.armor]) + ('(blocked)' if dmg.block else '') + ('(critical)' if dmg.crit else '')
 
     logger.warning(report)
 
 @dp.handler(EventType.ChatMessage)
 def chat_handler(client: Client, dp: Dispatcher, event: Event):
     parsed_event = ChatMessage.from_dict(event)
-
+    if (parsed_event.channel == 1):
+        ...
     logger.debug(f"{parsed_event.chat_message_from}: {parsed_event.msg}")
 
 @dp.handler(EventType.Enter)

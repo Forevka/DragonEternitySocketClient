@@ -1,3 +1,4 @@
+from db.bot_info_db import BotInfoDB
 import random
 from enums.target_type import TargetType
 from db.items import ItemDB
@@ -14,6 +15,8 @@ class UserInFight:
 
     is_dead: bool
     is_bot: bool
+    bot_tpl_id: int
+
     have_dragon: bool
 
     hp: int
@@ -65,7 +68,11 @@ class UserInFight:
         if (health_elixirs):
             return health_elixirs[0]
 
-
+    def get_name(self,) -> str:
+        if (self.is_bot):
+            return BotInfoDB.get_instance().get_by_id(self.bot_tpl_id).get('title', '')
+        
+        return self.nick
 
     @staticmethod
     def load_spells(data: dict) -> typing.List:
@@ -91,6 +98,7 @@ class UserInFight:
         u.cid = data.get("id", 0)
         u.is_dead = data.get("dead", False)
         u.is_bot = data.get('bot', False)
+        u.bot_tpl_id = data.get('botTplId', 0)
         u.have_dragon = data.get("haveDragon", False)
         u.hp = data.get("hp", 0)
         u.max_hp = data.get("maxHp", 0)
@@ -164,6 +172,13 @@ class Fight:
             f.update_pers(i)
 
         return f
+
+    def get_by_id(self, user_id):
+        for i in self.users:
+            if (i.cid == user_id):
+                return i
+        
+        return None
 
     def update_pers(self, data):
         user = UserInFight.load_user(data)

@@ -1,4 +1,6 @@
 class UserConfig:
+    in_game: bool
+
     user_id: str
     user_ccid: str
     user_key: str
@@ -11,6 +13,7 @@ class UserConfig:
     @staticmethod
     def load(data: dict) -> 'UserConfig':
         cfg = UserConfig()
+        cfg.in_game = True
         cfg.host = data.get('host')[0]
         cfg.port = int(data.get('port')[0])
 

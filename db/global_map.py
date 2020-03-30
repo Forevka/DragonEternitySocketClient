@@ -14,8 +14,8 @@ class MapDB:
     map_links: typing.List[dict]
 
     def __init__(self):
-        self.db = json.loads(open('areaTpls.json', 'r', encoding='utf-8').read())
-        self.links_db = json.loads(open('areaLinks.json', 'r', encoding='utf-8').read())
+        self.db = json.loads(open('db\\areaTpls.json', 'r', encoding='utf-8').read())
+        self.links_db = json.loads(open('db\\areaLinks.json', 'r', encoding='utf-8').read())
 
         self.tart_map_areas = []
         self.map_links = []
