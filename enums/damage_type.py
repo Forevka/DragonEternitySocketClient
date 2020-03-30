@@ -9,6 +9,7 @@ class DamageType(Enum):
     Earth = 8
     Water = 16
     Chaos = 32
+    Electric = 64
     Life = 128 #heal
     Destruction = 256
     Time = 512

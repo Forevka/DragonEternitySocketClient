@@ -35,12 +35,12 @@ client = Client(LOGIN, PASSWORD, 'TEST_KILL', is_silent_login=True)
 client.user_config = UserConfig()
 
 client.user_config.host = "game2.drako.ru"
-client.user_config.port = 7701
-client.user_config.env = 1
-client.user_config.user_key = "a451089c4a917b9c23c26f6afb3fea34"
+client.user_config.port = 7704
+client.user_config.env = 2
+client.user_config.user_key = "ecc12692de6cbf108eedb18183b5c7e3"
 client.user_config.user_ccid = "5D4BCF747B3C"
 client.user_config.user_lang = "ru"
-client.user_config.user_id = "21262955"
+client.user_config.user_id = "21263678"
 
 client.global_fight_state = Fight()
 client.global_user_state = UserGlobal()
@@ -71,12 +71,15 @@ def ping(client: Client, dp: Dispatcher,):
 
     client.send(a)
 
-#@dp.handler(EventType.AreaBots)
-#def attack_bot(client: Client, dp: Dispatcher, event: Event):
-#    a = command('attackBot')
-#    a['id'] = 6
+@dp.handler(EventType.AreaBots)
+def attack_bot(client: Client, dp: Dispatcher, event: Event):
+    a = command('attackBot')
+    a['id'] = 6
 
-#    client.send(a)
+    client.send(a)
+    
+
+
 
 @dp.handler(EventType.PersListChange)
 def pers_list_change(client: Client, dp: Dispatcher, event: Event):
@@ -133,7 +136,7 @@ def attack_now_handler(client: Client, dp: Dispatcher, event: Event):
             logger.warning(f'Physic attack')
             cmd = command('castSpell')
             cmd['srcType'] = 1
-            cmd['srcId'] = Attack.Mana.value
+            cmd['srcId'] = Attack.Simple.value
             cmd['targetId'] = client.global_fight_state.opp.cid
 
             client.send(cmd)
@@ -170,12 +173,10 @@ def new_obs(client: Client, dp: Dispatcher, event: Event):
 
 @dp.handler(EventType.UserInfo)
 def user_info(client: Client, dp: Dispatcher, event: Event):
-
     #a = command('attackBot')
     #a['id'] = 6
 
     #client.send(a)
-    #sleep(2)
     ...
 
 
@@ -197,6 +198,13 @@ def fight_results(client: Client, dp: Dispatcher, event: Event):
         report += f'\t\n {item_info_db.get_item_description(i.item_id).get("title", "")} - {i.count}'
 
     client.log_telegram(report)
+
+    time.sleep(20)
+
+    a = command('attackBot')
+    a['id'] = 6
+
+    client.send(a)
     
 
 

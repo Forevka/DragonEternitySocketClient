@@ -36,6 +36,7 @@ class EventType(Enum):
     FriendList = auto()
     FriendInfo = auto()
     AddAttr = auto()
+    PartyMemberInfo = auto()
 
 
     Lots = auto() ##my custom event
