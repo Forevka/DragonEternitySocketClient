@@ -40,3 +40,4 @@ class EventType(Enum):
 
 
     Lots = auto() ##my custom event
+    TradeInfo = auto()

@@ -64,7 +64,7 @@ class Dispatcher:
     def dispatch(self, updates: Update):
         for event in updates.events:
             logger.debug(f'Event {event.event} seq {event.seq}')
-            print(event.data)
+            print(event.data) #TradeOppConfirm
             for handler in self.handlers.get(EventType[upperfirst(event.event)], []):
                 handler(self.client, self, event)
 

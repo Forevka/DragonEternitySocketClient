@@ -19,7 +19,9 @@ import math
 if __name__ == "__main__":
     db = BotInfoDB.get_instance()
 
-    pprint(db.get_by_id(4264))
+    for i in db.db.values():
+        if "грабитель дейдри" in i.get('title', '').lower():
+            print(i)
 
     '''
     i = db.get_item(8067)

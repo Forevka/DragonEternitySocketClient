@@ -1,3 +1,4 @@
+from models.BaseEvent import Update
 from telegram_bot_logger import TelegramBotLogger
 from db.item_info import ItemInfoDB
 from models.UserGlobal import UserGlobal
@@ -17,6 +18,23 @@ from AMFBuffer import AMFBuffer
 from dispatcher import Dispatcher
 from threading import Thread
 
+class RPCWaiter:
+    data: typing.Union[Update, None]
+    
+    def __init__(self,):
+        self.data = None
+
+    def __iter__(self,):
+        return self
+
+    def __next__(self,):
+        return self.next()
+
+    def update_data(self, data: Update):
+        self.data = data
+
+    def next(self,):
+        return self.data
 
 class Client:
     onstart_handlers: typing.List[typing.Callable[['Client', Dispatcher], None]]
@@ -37,6 +55,8 @@ class Client:
 
     receiver: Thread
 
+    rpc: typing.Dict[int, RPCWaiter]
+
     def __init__(self, 
         login: str, 
         password: str, 
@@ -55,6 +75,7 @@ class Client:
         self.tg_logger = TelegramBotLogger()
 
         self.receiver = Thread(target=self.receive)
+        self.rpc = {}
         '''
         if (is_silent_login):
             self.user_config = silent_login(login, password, user_name)
@@ -107,7 +128,11 @@ class Client:
         self.sequence_counter += 1
         buffer['seq'] = self.sequence_counter
 
+        self.rpc[self.sequence_counter] = RPCWaiter()
+
         self.send(buffer)
+
+        return self.rpc[self.sequence_counter]
 
 
     def receive(self,):
@@ -121,9 +146,13 @@ class Client:
                 #length = int.from_bytes(bytes=length, byteorder='big')
                 #print(length)
 
-                updates = buffer.decode(data[4:])
+                update = buffer.decode(data[4:])
                 
-                thread = Thread(target=self.dispatcher.dispatch, args=(updates,))
+                if (update.seq != -1):
+                    logger.error(update.seq)
+                    self.rpc[update.seq].update_data(update)
+
+                thread = Thread(target=self.dispatcher.dispatch, args=(update,))
                 thread.start()
                 #self.dispatcher.dispatch(updates)
             except KeyboardInterrupt as kb_interrupt:
