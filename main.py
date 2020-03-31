@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from utils.item_info_dump import LotItemDB
 from enums.damage_type import DamageType
 from db.item_info import ItemInfoDB
@@ -29,6 +29,7 @@ from models.NewAlly import NewAlly
 from models.Cast import Cast
 from db.item_kinds_db import ItemKindDB
 from time import sleep
+from datetime import timedelta
 
 client = Client(LOGIN, PASSWORD, 'TEST_KILL', is_silent_login=True)
 
@@ -37,7 +38,7 @@ client.user_config = UserConfig()
 client.user_config.host = "game2.drako.ru"
 client.user_config.port = 7704
 client.user_config.env = 2
-client.user_config.user_key = "ecc12692de6cbf108eedb18183b5c7e3"
+client.user_config.user_key = "742686e43a8a97227dfe13c8b7b98f87"
 client.user_config.user_ccid = "5D4BCF747B3C"
 client.user_config.user_lang = "ru"
 client.user_config.user_id = "21263678"
@@ -71,12 +72,30 @@ def ping(client: Client, dp: Dispatcher,):
 
     client.send(a)
 
+
+@dp.task(1)
+def start_fight(client: Client, dp: Dispatcher):
+    logger.warning(f'is in fight {client.in_fight}')
+    if (client.in_fight == False):
+        logger.warning('not in fight now')
+        logger.warning(f'last battle was in {client.last_fight_time.strftime("%Y/%m/%d, %H:%M:%S")}')
+        logger.warning(f'current time {datetime.now().strftime("%Y/%m/%d, %H:%M:%S")}')
+        logger.warning(f'next battle can be in {(timedelta(seconds=client.fight_cooldown) + client.last_fight_time).strftime("%Y/%m/%d, %H:%M:%S")}')
+        if (timedelta(seconds=client.fight_cooldown) + client.last_fight_time) < datetime.now():
+            logger.warning(f'! attacking')
+            a = command('attackBot')
+            a['id'] = 6
+
+            client.send(a)
+            client.in_fight = True
+
 @dp.handler(EventType.AreaBots)
 def attack_bot(client: Client, dp: Dispatcher, event: Event):
-    a = command('attackBot')
-    a['id'] = 6
+    #a = command('attackBot')
+    #a['id'] = 6
 
-    client.send(a)
+    #client.send(a)
+    ...
     
 
 
@@ -149,6 +168,8 @@ def fight_state(client: Client, dp: Dispatcher, event: Event):
     client.global_fight_state = Fight.load(event.data)
     logger.warning(str(client.global_fight_state))
 
+    #client.in_fight = True
+
     cmd = command('fightReady')
     client.send(cmd)
 
@@ -198,13 +219,14 @@ def fight_results(client: Client, dp: Dispatcher, event: Event):
         report += f'\t\n {item_info_db.get_item_description(i.item_id).get("title", "")} - {i.count}'
 
     client.log_telegram(report)
+    client.in_fight = False
+    client.last_fight_time = datetime.now()
+    #time.sleep(20)
 
-    time.sleep(20)
+    #a = command('attackBot')
+    #a['id'] = 6
 
-    a = command('attackBot')
-    a['id'] = 6
-
-    client.send(a)
+    #client.send(a)
     
 
 

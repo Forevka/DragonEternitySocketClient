@@ -1,4 +1,5 @@
 from models.BaseEvent import Update
+from datetime import date, datetime
 from telegram_bot_logger import TelegramBotLogger
 from db.item_info import ItemInfoDB
 from models.UserGlobal import UserGlobal
@@ -56,6 +57,9 @@ class Client:
     receiver: Thread
 
     rpc: typing.Dict[int, RPCWaiter]
+    last_fight_time: datetime
+    in_fight: bool
+    fight_cooldown: int
 
     def __init__(self, 
         login: str, 
@@ -76,6 +80,11 @@ class Client:
 
         self.receiver = Thread(target=self.receive)
         self.rpc = {}
+
+        self.last_fight_time = datetime.now()
+        self.in_fight = False
+        self.fight_cooldown = 35
+
         '''
         if (is_silent_login):
             self.user_config = silent_login(login, password, user_name)
