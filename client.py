@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from telegram_bot_logger import TelegramBotLogger
 from db.item_info import ItemInfoDB
 from models.UserGlobal import UserGlobal
@@ -37,6 +38,10 @@ class Client:
 
     receiver: Thread
 
+    last_fight_time: datetime
+    in_fight: bool
+    fight_cooldown: int
+
     def __init__(self, 
         login: str, 
         password: str, 
@@ -55,6 +60,11 @@ class Client:
         self.tg_logger = TelegramBotLogger()
 
         self.receiver = Thread(target=self.receive)
+
+        self.last_fight_time = datetime.now()
+        self.in_fight = False
+        self.fight_cooldown = 35
+
         '''
         if (is_silent_login):
             self.user_config = silent_login(login, password, user_name)

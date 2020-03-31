@@ -40,3 +40,5 @@ class EventType(Enum):
 
 
     Lots = auto() ##my custom event
+    BonusInfo = auto()
+    AreaBotsDead = auto()
