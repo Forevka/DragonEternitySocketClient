@@ -60,6 +60,24 @@ class UserInFight:
             return random.choice(possible_by_mana)
         
         return None
+    
+    def get_spell_by_name(self, mp: int, spell_name: str):
+        db = ItemDB.get_instance()
+        possible_magic = db.get_possible_magic([i.data.get('id', 0) for i in self.fight_spells])
+
+        possible_by_mana = []
+
+        for i in possible_magic:
+            if i.get('spellManaCost', 9999) * 2 < mp:
+                target_type = i.get('spellTargetType', 0)
+                if (spell_name.lower() in i.get('title', '').lower()):
+                    if (target_type in [TargetType.Auxilary, TargetType.Opponent]):
+                        possible_by_mana.append(i)
+        
+        if possible_by_mana:
+            return random.choice(possible_by_mana)
+        
+        return None
 
 
     def get_elixir_for_heal(self,) -> typing.Union[FightItem, None]:

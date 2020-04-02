@@ -32,13 +32,13 @@ class AttackWait:
     @staticmethod
     def from_dict(obj: Any) -> 'AttackWait':
         assert isinstance(obj, dict)
-        evt = from_str(obj.get("evt"))
-        hp = from_int(obj.get("hp"))
-        mp = from_int(obj.get("mp"))
-        opp_hp = from_int(obj.get("oppHp"))
-        opp_mp = from_int(obj.get("oppMp"))
-        pers_id = from_int(obj.get("persId"))
-        remained = from_int(obj.get("remained"))
+        evt = from_str(obj.get("evt", ''))
+        hp = from_int(obj.get("hp", 0))
+        mp = from_int(obj.get("mp", 0))
+        opp_hp = from_int(obj.get("oppHp", 0))
+        opp_mp = from_int(obj.get("oppMp", 0))
+        pers_id = from_int(obj.get("persId", 0))
+        remained = from_int(obj.get("remained", 0))
         return AttackWait(evt, hp, mp, opp_hp, opp_mp, pers_id, remained)
 
     def to_dict(self) -> dict:

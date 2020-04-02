@@ -63,7 +63,7 @@ class Client:
 
         self.last_fight_time = datetime.now()
         self.in_fight = False
-        self.fight_cooldown = 35
+        self.fight_cooldown = 2
 
         '''
         if (is_silent_login):

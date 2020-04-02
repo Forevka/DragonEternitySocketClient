@@ -38,7 +38,7 @@ client.user_config = UserConfig()
 client.user_config.host = "game2.drako.ru"
 client.user_config.port = 7704
 client.user_config.env = 2
-client.user_config.user_key = "742686e43a8a97227dfe13c8b7b98f87"
+client.user_config.user_key = "85860adb9d7367e72e2712a233ce9d14"
 client.user_config.user_ccid = "5D4BCF747B3C"
 client.user_config.user_lang = "ru"
 client.user_config.user_id = "21263678"
@@ -84,7 +84,7 @@ def start_fight(client: Client, dp: Dispatcher):
         if (timedelta(seconds=client.fight_cooldown) + client.last_fight_time) < datetime.now():
             logger.warning(f'! attacking')
             a = command('attackBot')
-            a['id'] = 6
+            a['id'] = 7
 
             client.send(a)
             client.in_fight = True
@@ -121,7 +121,7 @@ def attack_now_handler(client: Client, dp: Dispatcher, event: Event):
 
         hp_procent = (attack_now.hp / client.global_fight_state.me.max_hp) * 100
 
-        if (hp_procent < 50):
+        if (hp_procent < 45):
             if (elixir is not None):
                 cmd = command('castSpell')
                 cmd['srcType'] = elixir.src_type # always 2
@@ -129,8 +129,9 @@ def attack_now_handler(client: Client, dp: Dispatcher, event: Event):
                 cmd['targetId'] = client.global_fight_state.me.cid
 
                 client.send(cmd)
+                logger.warning(f'drink elixir of health')
 
-        spell = client.global_fight_state.me.get_spell(attack_now.mp, can_be_auxilary=False)
+        spell = client.global_fight_state.me.get_spell_by_name(attack_now.mp, 'огненный шар')#get_spell(attack_now.mp, can_be_auxilary=False)
 
         
 
@@ -155,7 +156,7 @@ def attack_now_handler(client: Client, dp: Dispatcher, event: Event):
             logger.warning(f'Physic attack')
             cmd = command('castSpell')
             cmd['srcType'] = 1
-            cmd['srcId'] = Attack.Simple.value
+            cmd['srcId'] = Attack.Mana.value
             cmd['targetId'] = client.global_fight_state.opp.cid
 
             client.send(cmd)
@@ -211,6 +212,11 @@ def item_info(client: Client, dp: Dispatcher, event: Event):
 def fight_results(client: Client, dp: Dispatcher, event: Event):
     res = FightResults.from_dict(event.data)
     item_info_db = ItemInfoDB.get_instance()
+
+    if (res.team == res.winner_team):
+        client.fight_cooldown = 2
+    else:
+        client.fight_cooldown = 35
 
     report = f"{datetime.now().strftime('%Y/%m/%d, %H:%M:%S')}\nБой {res.fight_title} закончен: <b>{'Победа' if res.team == res.winner_team else 'Проигрыш'}</b> <a href='https://drako.ru/game/fight.php?id={res.fight_id}'>ссылка</a>"
     report += f"\nУрон: {res.dmg} Exp: {res.exp} Money: {res.money}"
