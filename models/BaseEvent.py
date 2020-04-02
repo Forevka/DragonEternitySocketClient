@@ -80,6 +80,8 @@ class Lot:
         
 
 class Update:
+    seq: int
+
     events: typing.List[Event]
     lots: typing.List[Lot]
 
@@ -88,6 +90,7 @@ class Update:
     time: datetime.datetime
 
     def __init__(self, data: ASObject,):
+        self.seq = data.get('seq', -1)
         self.raw_events = data.get('events', [])
         self.raw_lots = data.get('lots', [])
 
