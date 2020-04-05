@@ -65,8 +65,11 @@ class Dispatcher:
         for event in updates.events:
             logger.debug(f'Event {event.event} seq {event.seq}')
             print(event.data) #TradeOppConfirm
-            for handler in self.handlers.get(EventType[upperfirst(event.event)], []):
-                handler(self.client, self, event)
+            try:
+                for handler in self.handlers.get(EventType[upperfirst(event.event)], []):
+                    handler(self.client, self, event)
+            except Exception as e:
+                logger.error(e)
 
     def add_handler(
         self, 

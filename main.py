@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from models.AreaBots import AreaBots
 from utils.item_info_dump import LotItemDB
 from enums.damage_type import DamageType
 from db.item_info import ItemInfoDB
@@ -31,6 +32,9 @@ from db.item_kinds_db import ItemKindDB
 from time import sleep
 from datetime import timedelta
 
+
+BOT_TO_ATTACK = 'призрак охотника'
+
 client = Client(LOGIN, PASSWORD, 'TEST_KILL', is_silent_login=True)
 
 client.user_config = UserConfig()
@@ -38,7 +42,7 @@ client.user_config = UserConfig()
 client.user_config.host = "game2.drako.ru"
 client.user_config.port = 7704
 client.user_config.env = 2
-client.user_config.user_key = "85860adb9d7367e72e2712a233ce9d14"
+client.user_config.user_key = "855961a4aabfe2f9d1e7a26a55d19a4a"
 client.user_config.user_ccid = "5D4BCF747B3C"
 client.user_config.user_lang = "ru"
 client.user_config.user_id = "21263678"
@@ -82,20 +86,21 @@ def start_fight(client: Client, dp: Dispatcher):
         logger.warning(f'current time {datetime.now().strftime("%Y/%m/%d, %H:%M:%S")}')
         logger.warning(f'next battle can be in {(timedelta(seconds=client.fight_cooldown) + client.last_fight_time).strftime("%Y/%m/%d, %H:%M:%S")}')
         if (timedelta(seconds=client.fight_cooldown) + client.last_fight_time) < datetime.now():
-            logger.warning(f'! attacking')
-            a = command('attackBot')
-            a['id'] = 7
+            target = client.global_bots_info.find_by_name(BOT_TO_ATTACK)
+            if target is not None:
+                logger.warning(f'! attacking {target.id}')
+                a = command('attackBot')
+                a['id'] = target.id
 
-            client.send(a)
-            client.in_fight = True
+                client.send(a)
+                client.in_fight = True
+            else:
+                client.tg_logger.send_message(f'Cant find bot {BOT_TO_ATTACK}')
 
 @dp.handler(EventType.AreaBots)
 def attack_bot(client: Client, dp: Dispatcher, event: Event):
-    #a = command('attackBot')
-    #a['id'] = 6
-
-    #client.send(a)
-    ...
+    bots = AreaBots.from_dict(event.data)
+    client.global_bots_info = bots
     
 
 
@@ -156,7 +161,7 @@ def attack_now_handler(client: Client, dp: Dispatcher, event: Event):
             logger.warning(f'Physic attack')
             cmd = command('castSpell')
             cmd['srcType'] = 1
-            cmd['srcId'] = Attack.Mana.value
+            cmd['srcId'] = Attack.Simple.value
             cmd['targetId'] = client.global_fight_state.opp.cid
 
             client.send(cmd)
@@ -207,6 +212,9 @@ def item_info(client: Client, dp: Dispatcher, event: Event):
     res = ItemInfo.from_dict(event.data)
     ItemInfoDB.get_instance().add_item(res)
 
+@dp.handler(EventType.FightFinish)
+def fight_finish(client: Client, dp: Dispatcher, event: Event):
+    logger.warning(event.data)
 
 @dp.handler(EventType.FightResults)
 def fight_results(client: Client, dp: Dispatcher, event: Event):
@@ -214,11 +222,12 @@ def fight_results(client: Client, dp: Dispatcher, event: Event):
     item_info_db = ItemInfoDB.get_instance()
 
     if (res.team == res.winner_team):
-        client.fight_cooldown = 2
+        client.fight_cooldown = 30
     else:
-        client.fight_cooldown = 35
+        client.fight_cooldown = 60 * 20
 
-    report = f"{datetime.now().strftime('%Y/%m/%d, %H:%M:%S')}\nБой {res.fight_title} закончен: <b>{'Победа' if res.team == res.winner_team else 'Проигрыш'}</b> <a href='https://drako.ru/game/fight.php?id={res.fight_id}'>ссылка</a>"
+    report = f"{'✅' if res.team == res.winner_team else '❌'} "
+    report += f"{datetime.now().strftime('%Y/%m/%d, %H:%M:%S')}\nБой {res.fight_title} закончен: <b>{'Победа' if res.team == res.winner_team else 'Проигрыш'}</b> <a href='https://drako.ru/game/fight.php?id={res.fight_id}'>ссылка</a>"
     report += f"\nУрон: {res.dmg} Exp: {res.exp} Money: {res.money}"
     report += f"\nДроп: "
     for i in res.drop_items:

@@ -1,3 +1,4 @@
+from models.AreaBots import AreaBots
 from models.BaseEvent import Update
 from datetime import date, datetime
 from telegram_bot_logger import TelegramBotLogger
@@ -51,6 +52,8 @@ class Client:
     global_user_state: UserGlobal
 
     global_item_info: ItemInfoDB
+
+    global_bots_info: AreaBots
 
     tg_logger: TelegramBotLogger
 
